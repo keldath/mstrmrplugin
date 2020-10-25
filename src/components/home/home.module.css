@@ -1,0 +1,11 @@
+
+.wrapper {  
+    margin-left: calc(50vw - 160px);
+    max-height: 250px;
+    max-width: 300px;
+}
+
+.linksBox {
+    overflow-y: scroll;
+    max-height: 250px;
+}

@@ -1,0 +1,65 @@
+
+
+.mainContainer {
+    background-color: brown;
+    height: 70vh;
+    width: 85vw;
+    display: block;
+    flex-flow: row wrap;
+   /* border-width: 1px;
+    border-style: solid;
+    border-color: rgb(219, 24, 24);*/
+    margin: auto;
+}
+
+.frstContainer , .secContainer, .thrdContainer , .dualcontainer {
+    background-color: rgb(109, 48, 48);
+    border-width: 1px;
+    flex: 1 100%;
+    border-style: dashed;
+    border-color: rgb(255, 172, 161);
+}
+
+.dualcontainer {
+    flex-flow: column wrap;
+    display: flex;
+    height: 77%;
+    order: 2
+}
+.frstContainer {
+    height: 20%;
+    order: 1;
+}
+.secContainer {
+   /*order: 3;*/
+   width: 60%;
+}
+.thrdContainer {
+   /* order: 4;*/
+   width: 40%;
+}
+
+.button {
+    display: flex;
+}
+
+.submit {
+    flex: auto;
+}
+
+.optionNavBar {
+    background-color: rgb(80, 1, 1);
+    display: flex;
+}
+
+.selectorNavBar {
+    background-color:  #282c34;
+}
+.optionContainer {
+    background-color: rgb(136, 80, 66);
+    border-style: inset;
+    border-color: rgb(97, 95, 95);
+}
+.selectorNavBarTab {
+    display: flex;
+}
