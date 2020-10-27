@@ -1,102 +1,98 @@
 // REDUCERS
 
 import * as actionTypes from './actions';
+import * as SELECTORSTATE from './stateTemplate';
 
 const initialState = {
-      selectorsNumbering: [0],
-      selected: 'new',
-      panelStack: {
-          new : {
-              mainDef : {
-                  id: 'id',
-                  linker: '',
-                  text: '',
-                  defaultName: '',
-                  subselector: ''
-              },
-              options : {
-                first : {
-                  idx: '',
-                  affectedT: '', 
-                  alias : '',
-                }
-              }
-          },
-      },
-      sheetPanel: {}
+       panelStack: { /*panelStack0 :{
+                     maindef: {...SELECTORSTATE['SELECTORSTATE']['panelStack'].maindef},
+                     options: {...SELECTORSTATE['SELECTORSTATE']['panelStack'].options}
+                     },
+                     selectorsNumbering: SELECTORSTATE['SELECTORSTATE']['panelStack'].selectorsNumbering,
+                     optionsNumbering: SELECTORSTATE['SELECTORSTATE']['panelStack'].optionsNumbering,
+                     selected: SELECTORSTATE['SELECTORSTATE']['panelStack'].selected*/
+                     ...SELECTORSTATE['SELECTORSTATE']['panelStack']
+      }
 }
-
-const randomIdGen = () => {
-  let numbering = initialState.selectorsNumbering;
-  let highest = Math.max.apply(Math, numbering)+1
-  initialState.selectorsNumbering = [...numbering,highest]
-  console.log(initialState.selectorsNumbering)
-  return highest;
-}
-
 export default (state=initialState, action) => {
     
+    const getNextSelectorIdx = () => {
+        let numbering = state.panelStack.selectorsNumbering;
+        let highest = Math.max.apply(Math, numbering)+1
+        return highest;
+    }
+
+    const getNextOptionIdx = () => {
+      let numbering = state.panelStack[state.panelStack.selected].optionsNumbering;
+      let highest = Math.max.apply(Math, numbering)+1
+      return highest;
+    }
     switch (action.type) {
-      case actionTypes.COUNTER_INCREMENT:
-
-        return {
-          ...state,
-          counter: state.counter + 1
-        };
-
-      case actionTypes.COUNTER_DECREMENT:
-        return {
-          ...state,
-          counter: state.counter - 1
-        };
-      
+     
       case actionTypes.ADD_SELECTOR:
-         let numbering = state.selectorsNumbering;
-         /*since the numbering have a 0 (the new template)
-           on a selectio addition, theres a need to add the initial template and a new secind selector
-           the first selector does not exist until a submit or an add selector.
-         */
-         if (numbering.length === 1) {
-            console.log(numbering.length)
-               return {
-                ...state,
-                selectorsNumbering: [...state.selectorsNumbering,1],
-                panelStack: {...state.panelStack, [action.payload.concat(0)] : {...state.panelStack.new}, 
-                                                  [action.payload.concat(randomIdGen())] : {...state.panelStack.new}}
-              }
-        } 
-        return {
-              ...state,
-              panelStack: {...state.panelStack, [action.payload.concat(randomIdGen())] : {...state.panelStack.new}}
-        }
-      case actionTypes.ADD_OPTION:
-
-        return {
-          ...state,
-          counter: state.counter + 1
-        };
-  
-      case actionTypes.REMOVE_OPTION:
-        return {
-          ...state,
-          counter: state.counter - 1
-        };
-      case actionTypes.SELECTED:
-        return {
-          ...state,
-          selected: action.payload
-        };    
-      case actionTypes.SUBMIT:
-          console.log(action.payload.selectorType)
-          let selectorId = action.payload.selected;
-          if (selectorId === 'new') {
-              selectorId = action.payload.selectorType.concat(randomIdGen())
+          let newSNum = getNextSelectorIdx();
+          let newSName = action.payload.concat(newSNum);
+              return {
+                  ...state,
+                   panelStack: {...state.panelStack, 
+                                [newSName] : {...SELECTORSTATE['SELECTORSTATE']['panelStack']['panelStack0']},
+                                selectorsNumbering: [...state.panelStack.selectorsNumbering, newSNum],
+                                selected: newSName,
+                  }
           }
+
+      case actionTypes.SELECTED:
+        
           return {
             ...state,
-            selected: selectorId,
-            panelStack: {...state.panelStack, [selectorId] : action.payload.data}
-          };                
+            panelStack: {...state.panelStack, selected: action.payload}
+          };    
+      
+      case actionTypes.ADD_OPTION:
+         let newONum = getNextOptionIdx();
+         //payload = selectorType: selectorType, selected: selected //later to identify to which selector to add
+         return {
+          ...state,
+           panelStack: {...state.panelStack, 
+                        [action.payload.selected] : {
+                          ...state.panelStack[action.payload.selected],
+                          options: {...state.panelStack[action.payload.selected].options,
+                                    [newONum] : {...SELECTORSTATE['SELECTORSTATE']['panelStack']['panelStack0'].options[0]}
+                          },
+                        optionsNumbering: [...state.panelStack[action.payload.selected].optionsNumbering, newONum],
+                      },
+          }
+  }
+  
+      case actionTypes.REMOVE_OPTION:
+       
+          
+        return {
+          ...state
+        };
+
+      case actionTypes.INPUT_CHANGE:
+
+          if (action.payload.optionIdx != null) {
+            return {
+              ...state,
+              panelStack: {...state.panelStack, [state.panelStack.selected] : {...state.panelStack[state.panelStack.selected] , 
+                                                                    [action.payload.inputSource]: {...state.panelStack[state.panelStack.selected][action.payload.inputSource], 
+                                                                    [action.payload.optionIdx] : {...state.panelStack[state.panelStack.selected][action.payload.inputSource][action.payload.optionIdx],
+                                                                      [action.payload.inputData.name]: action.payload.inputData.value} }}
+                                                                    }
+                                                                     
+              };
+          }
+          else {
+            return {
+              ...state,
+              panelStack: {...state.panelStack, [state.panelStack.selected] : {...state.panelStack[state.panelStack.selected] , 
+                                                                    [action.payload.inputSource]: {...state.panelStack[state.panelStack.selected][action.payload.inputSource], 
+                                                                      [action.payload.inputData.name]: action.payload.inputData.value} }}
+                                                                     
+              };
+          }          
 
       default:
         return state;

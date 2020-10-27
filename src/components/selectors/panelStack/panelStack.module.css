@@ -53,3 +53,10 @@
     border-style: inset;
     border-color: rgb(97, 95, 95);
 }
+
+.inputMain {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}

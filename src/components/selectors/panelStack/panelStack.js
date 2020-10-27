@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 
-//import * as actionTypes from '../../../store/actions';
+import * as actionTypes from '../../../store/actions';
 import store from '../../../store/store'
 import { connect } from 'react-redux';
 
 import { PANELSTACK } from '../../../layout/naming';
 import styles from './panelStack.module.css';
 
-store.subscribe(()=>{console.log(store.getState())})
+store.subscribe(()=>{console.log('updated state:' ,store.getState())})
 
 /* This will define the selector type all the inputs that are collected from this selector
-it will be sent to the redux state once submit button is clicked.*/
-const inputsObj = {};
-const sType = PANELSTACK;
-function inputHandler (event) {
-    inputsObj[event.target.id] = event.target.value;
-    console.log(inputsObj)
-}
 
+it will be sent to the redux state once submit button is clicked.*/
+const sType = PANELSTACK;
+const mainInputs = ['text','default','mask','subselector']
+const optionsInput = ['alias','affectedTarget']
 class PanelStackMain extends Component {
 
 
@@ -25,25 +22,28 @@ class PanelStackMain extends Component {
         super(props)
         this.myref = React.createRef();
     }
-    /*
-    static inputsObj = {}
-
-    inputHandler = (event) => {
-        PanelStackMain.inputsObj[event.target.id] = event.target.value;
-        console.log(PanelStackMain.inputsObj)
-    }
-    */
+    
     render() {
-        console.log(this.props.sId)
-      return (
-          <React.Fragment>
-              <br/>
-              text <input type="text" id='text' onChange={inputHandler.bind(this)}></input> 
-              default Name <input type="text" id='default' onChange={inputHandler.bind(this)}></input>
-              Mask <input type="text" id='Mask' onChange={inputHandler.bind(this)}></input>
-              Subselector <input type="text" id='subselector' onChange={inputHandler.bind(this)}></input>   
-          </React.Fragment>   
-      )
+
+        /*note input word for in jsx is htmlFor amd the usage of name*/
+        let inputs = mainInputs.map((item,idx)=>{
+            return (
+                <React.Fragment key={idx}>
+                    <label htmlFor={item}>{item}</label>
+                    <input type="text" onChange={this.props.updateParmeters.bind(this,'maindef',null)} name={item}
+                                     value={this.props.panelStack[this.props.selected].maindef[item]}/>
+                </React.Fragment>
+            )
+        })
+
+        return (
+             <React.Fragment>
+                  <br/>
+                 <div className={styles.inputMain}>
+                   {inputs}
+                 </div>
+             </React.Fragment>
+        )
     }
 }         
 
@@ -54,25 +54,53 @@ class PanelStackOptions extends Component {
         super(props)
         this.myref = React.createRef();
     }
-    
-    //using the static from the PanelStackMain component :)
-    //static inputsObj = {}
-    /*
-    inputHandler = (event) => {
-        PanelStackMain.inputsObj[event.target.id] = event.target.value;
-        console.log(PanelStackMain.inputsObj)
-    }
-    */
+ //value={this.props.panelStack[this.props.selected].options[item]}
     render() {
-        console.log(PanelStackOptions.aa)
-        //let pStack = this.props.panelStack;  
-        return (  
-                <div key='123' className={styles.optionContainer}>option: 
+        let selectedObj = this.props.panelStack[this.props.selected];
+        let optionContainer = selectedObj.optionsNumbering.map((item1,idx1)=>{
+
+             let secInputs = optionsInput.map((item2,idx2)=> {
+                return (
+                   <React.Fragment key={(selectedObj+'option'+idx2)}>
+                        <label htmlFor={item2}>{item2}</label>
+                        <input type="text" onChange={this.props.updateParmeters.bind(this,'options',item1)} name={item2} 
+                                            value={this.props.panelStack[this.props.selected].options[idx1][item2]}/>
+                    </React.Fragment>
+                )
+            })
+            return (
+                <React.Fragment key={(this.props.selected+idx1)}>
+                            <div className={styles.optionContainer}>option: 
+                             <section style={{'display':'block'}}>
+                                 {secInputs}
+                            </section> 
+                            </div>
+                </React.Fragment>
+            )
+        })
+/*
+        let secInputs = optionsInput.map((item,idx)=> {
+            return (
+                <React.Fragment key={idx}>
+                    <label htmlFor={item}>{item}</label>
+                    <input type="text" onChange={this.props.updateParmeters.bind(this,'options')} name={item} />
+                </React.Fragment>
+            )
+        })
+
+           <div key={(Math.random *100 -1)} className={styles.optionContainer}>option: 
                       <section style={{'display':'block'}}>
-                          alias<input type="text" id='alias' placeholder='aa' onChange={inputHandler.bind(this)}/>
-                          affected Target Name<input id='affectedTarget' type="text" placeholder='bb'onChange={inputHandler.bind(this)}/>
+                      {optionContainer}
                        </section>
-                </div> )
+                </div>
+*/
+
+        return (  
+            <React.Fragment key={(Math.random *100 -1)}> 
+                {optionContainer} 
+            </React.Fragment>
+              
+                )
     }
 }
 
@@ -81,18 +109,35 @@ class PanelStackOptions extends Component {
 const mapStateToProps = state => {
 
     return {
-        panelStack: state.panelStack
+        panelStack: state.panelStack,
+        selected: state.panelStack.selected
     }
 }
-/*
+
 const mapDispatchToPorps = dispatch => {
     return {
-        updateParmeters: (event) => dispatch({type: actionTypes.INPUT_CHANGE, payload: event.target})
+        updateParmeters: (source,optionIdx,event) => dispatch({type: actionTypes.INPUT_CHANGE, 
+                                                                payload: {inputData: event.target, 
+                                                                           inputSource: source,
+                                                                           optionIdx: optionIdx}})
     }
 }
-*/
-export default { PanelStackMain : connect(mapStateToProps,null) (React.memo(PanelStackMain)),
-                 PanelStackOptions : connect(mapStateToProps,null) (React.memo(PanelStackOptions))
+
+export default { PanelStackMain : connect(mapStateToProps,mapDispatchToPorps) (React.memo(PanelStackMain)),
+                 PanelStackOptions : connect(mapStateToProps,mapDispatchToPorps) (React.memo(PanelStackOptions))
                  };
-//send the iput info to the indexselector so submit can update the redux state.
-export {inputsObj, sType};
+export {sType}
+
+
+//changed to be dynamic
+ /*<React.Fragment>
+              <br/>
+              text <input type="text" id='text' onChange={inputHandler.bind(this)} /> 
+              default Name <input type="text" id='default' onChange={inputHandler.bind(this)}/>
+              Mask <input type="text" id='Mask' onChange={inputHandler.bind(this)}/>
+              Subselector <input type="text" id='subselector' onChange={inputHandler.bind(this)}/> 
+          </React.Fragment> 
+          
+          
+            alias<input type="text" name='alias' placeholder='aa' onChange={this.props.updateParmeters.bind(this)}/>
+                          affected Target Name<input name='affectedTarget' type="text" placeholder='bb' onChange={this.props.updateParmeters.bind(this)}/>*/ 
