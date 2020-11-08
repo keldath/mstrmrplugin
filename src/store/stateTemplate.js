@@ -19,7 +19,8 @@ export const SELECTORSTATE = {
               affectedTarget: '', 
               alias : '',
             }
-          }
+          },
+          html: ''
       } 
     }      
 };

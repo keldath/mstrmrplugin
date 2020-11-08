@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 
 import * as actionTypes from '../../store/actions';
@@ -72,7 +73,12 @@ class Indexselectors extends Component {
                         {selectorOptions}
                         <br/>
                         </div>
-                        <div className={styles.thrdContainer}></div>
+                        <div className={styles.thrdContainer}>
+                            <br/>
+                            <span style={{display:'block', fontSize: '14px',textAlign: 'center'}} >Selector's HTML Template</span>
+                            <br/>
+                            {this.props.panelStack[this.props.panelStack.selected].html}
+                        </div>
                     </div>
                 </div>
             </div>

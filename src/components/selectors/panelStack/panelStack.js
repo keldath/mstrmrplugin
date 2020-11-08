@@ -29,9 +29,10 @@ class PanelStackMain extends Component {
         let inputs = mainInputs.map((item,idx)=>{
             return (
                 <React.Fragment key={idx}>
-                    <label htmlFor={item}>{item}</label>
-                    <input type="text" onChange={this.props.updateParmeters.bind(this,'maindef',null)} name={item}
-                                     value={this.props.panelStack[this.props.selected].maindef[item]}/>
+                    <label htmlFor={item} className={styles.test} ><span className={styles.labelTag}>{item}</span>
+                        <input type="text" onChange={this.props.updateParmeters.bind(this,'maindef',null)} name={item}
+                                         value={this.props.panelStack[this.props.selected].maindef[item]}/>
+                    </label>
                 </React.Fragment>
             )
         })
@@ -57,43 +58,36 @@ class PanelStackOptions extends Component {
  //value={this.props.panelStack[this.props.selected].options[item]}
     render() {
         let selectedObj = this.props.panelStack[this.props.selected];
+        if (selectedObj.optionsNumbering.length === 0) {
+            //in case all options were removed
+            return null;
+        }
         let optionContainer = selectedObj.optionsNumbering.map((item1,idx1)=>{
-
+            //cant work with idx's - when deleting options, the index of items will not be equal to the item, 
+            //if option 0 is deleted, and theres option 1, it will cause an error, so always use the item it self
              let secInputs = optionsInput.map((item2,idx2)=> {
                 return (
-                   <React.Fragment key={(selectedObj+'option'+idx2)}>
-                        <label htmlFor={item2}>{item2}</label>
-                        <input type="text" onChange={this.props.updateParmeters.bind(this,'options',item1)} name={item2} 
-                                            value={this.props.panelStack[this.props.selected].options[idx1][item2]}/>
+                   <React.Fragment key={(selectedObj+'option'+item2)}>
+                     
+                        <label htmlFor={item2} className={styles.test}><span className={styles.labelOption}>{item2}</span>
+                            <input type="text" onChange={this.props.updateParmeters.bind(this,'options',item1)} name={item2} 
+                                   value={this.props.panelStack[this.props.selected].options[item1][item2]}/>
+                        </label>
                     </React.Fragment>
                 )
             })
             return (
-                <React.Fragment key={(this.props.selected+idx1)}>
-                            <div className={styles.optionContainer}>option: 
-                             <section style={{'display':'block'}}>
-                                 {secInputs}
-                            </section> 
+                <React.Fragment key={(this.props.selected+item1)}>
+                            <div className={styles.optionContainer}>
+                                <span className={styles.optionName}>option {item1}:</span> 
+                                <button className={styles.removeBtn} onClick={this.props.removeOption.bind(this,item1)}>-</button>
+                                <section>
+                                     {secInputs}
+                                </section> 
                             </div>
                 </React.Fragment>
             )
         })
-/*
-        let secInputs = optionsInput.map((item,idx)=> {
-            return (
-                <React.Fragment key={idx}>
-                    <label htmlFor={item}>{item}</label>
-                    <input type="text" onChange={this.props.updateParmeters.bind(this,'options')} name={item} />
-                </React.Fragment>
-            )
-        })
-
-           <div key={(Math.random *100 -1)} className={styles.optionContainer}>option: 
-                      <section style={{'display':'block'}}>
-                      {optionContainer}
-                       </section>
-                </div>
-*/
 
         return (  
             <React.Fragment key={(Math.random *100 -1)}> 
@@ -117,27 +111,16 @@ const mapStateToProps = state => {
 const mapDispatchToPorps = dispatch => {
     return {
         updateParmeters: (source,optionIdx,event) => dispatch({type: actionTypes.INPUT_CHANGE, 
-                                                                payload: {inputData: event.target, 
-                                                                           inputSource: source,
-                                                                           optionIdx: optionIdx}})
+                                                               payload: {inputData: event.target, 
+                                                                         inputSource: source,
+                                                                         optionIdx: optionIdx}}),
+        removeOption: (idx) => dispatch({type: actionTypes.REMOVE_OPTION, payload: idx})                                                           
     }
 }
 
 export default { PanelStackMain : connect(mapStateToProps,mapDispatchToPorps) (React.memo(PanelStackMain)),
                  PanelStackOptions : connect(mapStateToProps,mapDispatchToPorps) (React.memo(PanelStackOptions))
                  };
-export {sType}
+export {sType}//what is the selector type
 
 
-//changed to be dynamic
- /*<React.Fragment>
-              <br/>
-              text <input type="text" id='text' onChange={inputHandler.bind(this)} /> 
-              default Name <input type="text" id='default' onChange={inputHandler.bind(this)}/>
-              Mask <input type="text" id='Mask' onChange={inputHandler.bind(this)}/>
-              Subselector <input type="text" id='subselector' onChange={inputHandler.bind(this)}/> 
-          </React.Fragment> 
-          
-          
-            alias<input type="text" name='alias' placeholder='aa' onChange={this.props.updateParmeters.bind(this)}/>
-                          affected Target Name<input name='affectedTarget' type="text" placeholder='bb' onChange={this.props.updateParmeters.bind(this)}/>*/ 

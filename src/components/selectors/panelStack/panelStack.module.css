@@ -57,6 +57,64 @@
 .inputMain {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+   /* justify-content: start;*/
     align-items: center;
 }
+
+.removeBtn {
+   /* display:inline-flex;*/
+    width: 6%;
+    float: right
+}
+
+.optionName {
+    width: 88%;
+    height: 100%;
+    display: flex;
+    color: white;
+    float: left;
+    font-size: 3vh;;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+.test {
+    color: yellow;
+}
+input{
+   /* width: 20%;*/
+    width: 30%;
+    min-width: 40px;
+    margin-right: 10px;
+    height: 80%;
+    align-self: center;
+}
+label {
+    width: 40%;
+    display: inline-flex;
+    justify-content: flex-start;
+    color: yellow;
+}
+
+ section {
+    text-align: left;
+ }
+
+ .labelOption {
+    /*width: 90%;*/
+    margin-left: 1px;
+   /* justify-content: space-evenly;*/
+    
+ }
+
+ .labelTag {
+    width : 40%;
+    text-align: right;
+    margin: auto;
+ }
+
+ .inputOption {
+    margin-left: 1px;
+ }
+
+
