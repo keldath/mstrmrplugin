@@ -11,14 +11,14 @@ import styles from './index.module.css';
 
 export class mainframe extends Component {
 
-  
     render() {
         return (
             <div className={styles.frame}> 
               <Navbar/>
                <Switch>
                    <Route path="/" component={Home} exact />
-                   <Route path="/indexselectors"  render={(props) => <Indexselectors {...props} rSrc={names.PANELSTACK} />}/> {/*this will pass a parameter along */}
+                   <Route path="/indexselectors/:sType"  render={(props) => <Indexselectors {...props} rSrc={names.PANELSTACK} />}/> {/*this will pass a parameter along */}
+                   <Route path="/" component={Home}/>{/*this will redirect any wrong routing */}
                  </Switch>
             </div>
         )

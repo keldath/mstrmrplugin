@@ -66,4 +66,6 @@
 }
 .selectorNavBarTab {
     display: flex;
+    width: 85vw;
+    overflow-x: auto;
 }

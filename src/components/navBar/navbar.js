@@ -10,7 +10,7 @@ export class navbar extends Component {
             <div className={styles.topnav} id="myTopnav">
                <Link className={styles.Link} to='/'>Home</Link> 
                <div className={styles.dropdown}>
-                <button className={styles.dropbtn}>Dropdown</button>
+               <button className={styles.dropbtn}>Dropdown</button>
                 <div className={styles.dropdown_content}>
                  {/*    <Link className={styles.Link} to='/fakePanels'>Fake Panel Selector</Link>
                      <Link className={styles.Link} to='/fakePanels'>tst</Link>

@@ -14,6 +14,8 @@ export class home extends Component {
         console.log('mounted')
     }
     render() {
+        window.history.pushState({}, null, `/Home`);//add a Home Url Name
+        
         return (
             <div>
                 <br/>

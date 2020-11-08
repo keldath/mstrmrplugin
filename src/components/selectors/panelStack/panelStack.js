@@ -12,7 +12,6 @@ store.subscribe(()=>{console.log('updated state:' ,store.getState())})
 /* This will define the selector type all the inputs that are collected from this selector
 
 it will be sent to the redux state once submit button is clicked.*/
-const sType = PANELSTACK;
 const mainInputs = ['text','default','mask','subselector']
 const optionsInput = ['alias','affectedTarget']
 class PanelStackMain extends Component {
@@ -31,7 +30,7 @@ class PanelStackMain extends Component {
                 <React.Fragment key={idx}>
                     <label htmlFor={item} className={styles.test} ><span className={styles.labelTag}>{item}</span>
                         <input type="text" onChange={this.props.updateParmeters.bind(this,'maindef',null)} name={item}
-                                         value={this.props.panelStack[this.props.selected].maindef[item]}/>
+                                         value={this.props[PANELSTACK][this.props.selected].maindef[item]}/>
                     </label>
                 </React.Fragment>
             )
@@ -48,7 +47,6 @@ class PanelStackMain extends Component {
     }
 }         
 
-
 class PanelStackOptions extends Component {
 
     constructor(props) {
@@ -57,7 +55,7 @@ class PanelStackOptions extends Component {
     }
  //value={this.props.panelStack[this.props.selected].options[item]}
     render() {
-        let selectedObj = this.props.panelStack[this.props.selected];
+        let selectedObj = this.props[PANELSTACK][this.props.selected];
         if (selectedObj.optionsNumbering.length === 0) {
             //in case all options were removed
             return null;
@@ -71,7 +69,7 @@ class PanelStackOptions extends Component {
                      
                         <label htmlFor={item2} className={styles.test}><span className={styles.labelOption}>{item2}</span>
                             <input type="text" onChange={this.props.updateParmeters.bind(this,'options',item1)} name={item2} 
-                                   value={this.props.panelStack[this.props.selected].options[item1][item2]}/>
+                                   value={this.props[PANELSTACK][this.props.selected].options[item1][item2]}/>
                         </label>
                     </React.Fragment>
                 )
@@ -103,8 +101,8 @@ class PanelStackOptions extends Component {
 const mapStateToProps = state => {
 
     return {
-        panelStack: state.panelStack,
-        selected: state.panelStack.selected
+        [PANELSTACK]: state[PANELSTACK],
+        selected: state[PANELSTACK].selected
     }
 }
 
@@ -121,6 +119,5 @@ const mapDispatchToPorps = dispatch => {
 export default { PanelStackMain : connect(mapStateToProps,mapDispatchToPorps) (React.memo(PanelStackMain)),
                  PanelStackOptions : connect(mapStateToProps,mapDispatchToPorps) (React.memo(PanelStackOptions))
                  };
-export {sType}//what is the selector type
 
 

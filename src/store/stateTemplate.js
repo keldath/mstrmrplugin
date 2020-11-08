@@ -1,9 +1,10 @@
+import * as naming from '../layout/naming';
 
 export const SELECTORSTATE = { 
-    panelStack : {
+    [naming.PANELSTACK] : {
       selectorsNumbering: [0],
-      selected: 'panelStack0',
-      'panelStack0': {
+      selected: naming.PANELSTACK.concat('0'),
+      [naming.PANELSTACK.concat('0')]: {
           optionsNumbering:[0],
           maindef : {
               id: 'id',
