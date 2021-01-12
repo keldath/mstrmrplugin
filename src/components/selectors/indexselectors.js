@@ -5,54 +5,56 @@ import * as actionTypes from '../../store/actions';
 //import store from '../../store/store'
 import { connect } from 'react-redux';
 
-import PanelStack from './panelStack/panelStack';
-import * as naming from '../../layout/naming';
+//import PanelStack from './panelStack/panelStack-deprecated';
+import InputGen from './inputGen';
+//import * as naming from '../../layout/naming';//not needed here for now obsolete to maintain dynamic.
 import styles from './indexselectors.module.css';
 
 //store.subscribe(()=>{console.log(store.getState())})
 
-let selectorType ='';//global placeHolder;
-
+let selectorType ='';//window.location.pathname.split('/')[1];//global placeHolder;
 class Indexselectors extends Component {
 /*
     constructor(props) {
         super(props)
         //this.myref = React.createRef();
     }
-  */  
-    
-    render() {
-       // console.log(this.props.history.replace('/','ynet'))
-       //console.log( this.props.history)
-       //window.history.pushState('page2', 'Title', '/page2.php');
-        window.history.pushState({}, null, `/${this.props.match.params.sType}`);//hide the indexselector component name without rendering
-        let selectorMain = '';
-        let selectorOptions = '';
-        let selectorButton = '';
-        selectorType = this.props.match.params.sType //this.props.rSrc;//2 parameter pass options
-        //load the right selector inputs-sent from the router
-        switch (selectorType) {
-            case naming.PANELSTACK/*'panelStack'*/:
-                selectorMain = <PanelStack.PanelStackMain sId={this.props[selectorType].selected}/>;
-                selectorOptions = <PanelStack.PanelStackOptions sId={this.props[selectorType].selected}/>;
-                selectorButton = Object.keys(this.props[selectorType]);
-                break;
-            default:
-                break; 
-                  
-        }    
+  */ 
+    updatePatch = (routePath,selectorType_,dispatch) => {
+        if (routePath !== selectorType_) {
+            dispatch(selectorType) 
+        }
+        return;
+    }
 
+    render() {
+        /* in order to leep the selector type dynamic, i used the window.location to grab it,
+            before - this was defined here,
+            and in the maptostate, i used explicit naming.PANELSTACK var.
+            so for now, these 2 are obsolete.
+            note that both vars are the same below.
+            selectorType = this.props.match.params.sType ;
+            this.props.rSrc;
+        */
+        selectorType = this.props.match.params.sType ;
+        this.updatePatch(this.props.state.routePath,selectorType,this.props.routePath)
+        console.log(selectorType)
+        window.history.pushState({}, null, `/${selectorType}`);//hide the indexselector component name without rendering
+        let selectorMain =  <InputGen.InputGenMain />;
+        let selectorOptions = <InputGen.InputGenOptions/>;
+        console.log(this.props)
+        let selectorButton = Object.keys(this.props.state[selectorType]);
+        
         let tabs = selectorButton.map((item,idx)=> { 
-            if (['selected','selectorsNumbering','optionsNumbering'].indexOf(item) !== -1) {
+            if (['selected','selectorsNumbering','optionsNumbering','inputTypesMain','inputTypesOptions','srcFn'].indexOf(item) !== -1) {
                 //dont make buttons out of these
                 return null
             }
             return (
-                    <button key={idx} className={styles.button} onClick={this.props.setSetected.bind(this,item)} onContextMenu={this.props.removeSelector}>{item}</button>
+                    <button key={idx} className={styles.button} onClick={this.props.setSetected.bind(this,item,selectorType)} onContextMenu={this.props.removeSelector.bind(this,selectorType)} title={'Right click to remove'}>{item}</button>
                 )
         });
        
-        console.log(this.props[selectorType])
         return (
             <div style={{display:'block'}}>
                 <br/><br/><br/>
@@ -62,7 +64,7 @@ class Indexselectors extends Component {
                 <div className={styles.mainContainer}> 
                 <div className={styles.selectorNavBar}>
                     <div className={styles.selectorNavBarTab}>
-                        <button className={styles.button} onClick={this.props.addSelector}>+</button>
+                        <button className={styles.button} onClick={this.props.addSelector.bind(this,selectorType)} title={'--Click to add a Selector. \n--Right click ON a Selector to remove it.'}>+</button>
                         {tabs}
                     </div>
                 </div>  
@@ -72,8 +74,8 @@ class Indexselectors extends Component {
                     <div className={styles.dualcontainer}>
                         <div className={styles.secContainer} ref={this.myref}>
                         <nav className={styles.optionNavBar}>
-                            <button className={styles.button} onClick={this.props.addOption.bind(this,selectorType,this.props[selectorType].selected)}>Option +</button>
-                            <button className={styles.submit} onClick={this.props.submit.bind(this,this.props[selectorType].selected)}>Submit</button>
+                            <button className={styles.button} onClick={this.props.addOption.bind(this,selectorType,this.props.state[selectorType].selected)}>Option +</button>
+                            <button className={styles.submit} onClick={this.props.submit.bind(this,this.props.state[selectorType].selected,selectorType)}>Submit</button>
                         </nav>   
                         {selectorOptions}
                         <br/>
@@ -82,7 +84,7 @@ class Indexselectors extends Component {
                             <br/>
                             <span style={{display:'block', fontSize: '14px',textAlign: 'center'}} >Selector's HTML Template</span>
                             <br/>
-                            {this.props[selectorType][this.props[selectorType].selected].html}
+                            {this.props.state[selectorType][this.props.state[selectorType].selected].html}
                         </div>
                     </div>
                 </div>
@@ -90,28 +92,46 @@ class Indexselectors extends Component {
         )
     }
 }
-
+    
+const mapStateToProps = state => {
+    /***section obsolete - the stype is taken from the match - see the class above. 
+        also due to multiple selectors - i get the whole state - this can be more efficiant with Object.keys...
+     */
+    //wanted to create a dynamic not hard coded state based on the selecor that was 
+    //havnt found anouther way yet. 11012021
+    //const pathSelector = window.location.pathname.replace('/indexselectors/','').replace('/','')
+    //console.log(pathSelector)
+    // return {
+    //     //[selectorType]: state[selectorType]
+    //     [pathSelector]: state[pathSelector] //using window to catch the selector type
+    // }
+    return {state:state}
+}
+/*
+//this is a more hard coded approach from the above.
 const mapStateToProps = state => {
     return {
-        [naming.PANELSTACK]: state[naming.PANELSTACK]
+        //[selectorType]: state[selectorType]
+        [naming.PANELSTACK]: state[naming.PANELSTACK], //using window to catch the selector type
+        [naming.SHEETPANEL]: state[naming.SHEETPANEL]
     }
 }
-
+*/
 const mapDispatchToPorps = dispatch => {
     return {
-        setSetected: (selected) => dispatch ({type: actionTypes.SELECTED ,payload: selected}),
-        addSelector: () => dispatch({type: actionTypes.ADD_SELECTOR ,payload: selectorType}),
-        addOption: (selectorType,selected) => dispatch({type: actionTypes.ADD_OPTION, payload: {selectorType: selectorType, selected: selected}}),
+        setSetected: (selected,selectorType) => dispatch ({type: actionTypes.SELECTED ,payload: {selected: selected,seltype: selectorType}}),
+        addSelector: (selectorType) => dispatch({type: actionTypes.ADD_SELECTOR ,payload: {seltype: selectorType}}),
+        addOption: (selectorType,selected) => dispatch({type: actionTypes.ADD_OPTION, payload: {seltype: selectorType, selected: selected}}),
         removeAll: (event) => {
                               event.preventDefault();
                               event.stopPropagation();
                               return ( dispatch({type: actionTypes.REMOVE_OPTION}));},
-        removeSelector: (event) => {  event.preventDefault();
+        removeSelector: (selectorType,event) => {  event.preventDefault();
                                       event.stopPropagation();
                                       console.log('aa')
-                                      return dispatch ({type: actionTypes.REMOVE_SELECTOR})},
-        submit: (selected) => dispatch({type: actionTypes.SUBMIT, payload : { selected: selected,
-                                                                                               selectorType: selectorType}})
+                                      return dispatch ({type: actionTypes.REMOVE_SELECTOR,payload :{seltype : selectorType}})},
+        submit: (selected,selectorType) => dispatch({type: actionTypes.SUBMIT, payload : { selected: selected,seltype: selectorType}}),
+        routePath: (name) => dispatch({type: actionTypes.ROUTEPATH, payload : name})
     }
 }
 

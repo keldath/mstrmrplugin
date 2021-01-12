@@ -6,7 +6,7 @@ import Home from '../components/home/home';
 import Navbar from '../components/navBar/navbar';
 //import PanelStack from '../components/selectors/panelStack/panelStack';
 import Indexselectors from '../components/selectors/indexselectors';
-import * as names from './naming';
+//import * as names from './naming';
 import styles from './index.module.css';
 
 export class mainframe extends Component {
@@ -17,7 +17,7 @@ export class mainframe extends Component {
               <Navbar/>
                <Switch>
                    <Route path="/" component={Home} exact />
-                   <Route path="/indexselectors/:sType"  render={(props) => <Indexselectors {...props} rSrc={names.PANELSTACK} />}/> {/*this will pass a parameter along */}
+                   <Route path="/indexselectors/:sType" render={(props) => <Indexselectors {...props} />}/> {/*this will pass a parameter along */}
                    <Route path="/" component={Home}/>{/*this will redirect any wrong routing */}
                  </Switch>
             </div>
@@ -25,5 +25,14 @@ export class mainframe extends Component {
     }
 }
 
-export default mainframe
-/*component={PanelStack}*/
+export default mainframe;
+//r={names.PANELSTACK}
+//r={names.SHEETPANEL}
+/*component={PanelStack}
+
+ <Route path="/indexselectors/:sType"  
+                            children={props => <Testchildrenroute {...props}/>}
+                            render={(props) => <Indexselectors {...props} rSrc={names.PANELSTACK} />}/> 
+                  
+*/
+{/*this will pass a parameter along */}

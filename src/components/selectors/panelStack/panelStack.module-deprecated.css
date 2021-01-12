@@ -1,0 +1,120 @@
+
+
+.mainContainer {
+    background-color: brown;
+    height: 70vh;
+    width: 85vw;
+    display: block;
+    flex-flow: row wrap;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(219, 24, 24);
+    margin: auto;
+}
+
+.frstContainer , .secContainer, .thrdContainer , .dualcontainer {
+    background-color: rgb(109, 48, 48);
+    border-width: 1px;
+    flex: 1 100%;
+    border-style: dashed;
+    border-color: rgb(255, 172, 161);
+}
+
+.dualcontainer {
+    flex-flow: column wrap;
+    display: flex;
+    height: 77%;
+    order: 2
+}
+.frstContainer {
+    height: 20%;
+    order: 1;
+}
+.secContainer {
+   /*order: 3;*/
+   width: 60%;
+}
+.thrdContainer {
+   /* order: 4;*/
+   width: 40%;
+}
+
+.button{
+    flex: auto;
+    display: flex;
+}
+
+.optionNavBar {
+    background-color: rgb(80, 1, 1);
+}
+
+.optionContainer {
+    background-color: rgb(136, 80, 66);
+    border-style: inset;
+    border-color: rgb(97, 95, 95);
+}
+
+.inputMain {
+    display: flex;
+    flex-wrap: wrap;
+   /* justify-content: start;*/
+    align-items: center;
+}
+
+.removeBtn {
+   /* display:inline-flex;*/
+    width: 6%;
+    float: right
+}
+
+.optionName {
+    width: 88%;
+    height: 100%;
+    display: flex;
+    color: white;
+    float: left;
+    font-size: 3vh;;
+    text-decoration: underline;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+.test {
+    color: yellow;
+}
+input{
+   /* width: 20%;*/
+    width: 30%;
+    min-width: 40px;
+    margin-right: 10px;
+    height: 80%;
+    align-self: center;
+}
+label {
+    width: 40%;
+    display: inline-flex;
+    justify-content: flex-start;
+    color: yellow;
+}
+
+ section {
+    text-align: left;
+ }
+
+ .labelOption {
+    /*width: 90%;*/
+    margin-left: 1px;
+   /* justify-content: space-evenly;*/
+    
+ }
+
+ .labelTag {
+    width : 40%;
+    text-align: right;
+    margin: auto;
+ }
+
+ .inputOption {
+    margin-left: 1px;
+ }
+
+

@@ -5,7 +5,7 @@ import store from '../../../store/store'
 import { connect } from 'react-redux';
 
 import { PANELSTACK } from '../../../layout/naming';
-import styles from './panelStack.module.css';
+import styles from './panelStack.module-deprecated.css';
 
 store.subscribe(()=>{console.log('updated state:' ,store.getState())})
 
