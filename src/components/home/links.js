@@ -9,12 +9,8 @@ export default function links() {
         <div className={styles.dropdown_content}>
             <Link className={styles.link} to={`/indexselectors/${naming.PANELSTACK}`} >{naming.PANELSTACK}</Link>
             <Link className={styles.link} to={`/indexselectors/${naming.SHEETPANEL}`}>{naming.SHEETPANEL}</Link>
-            <Link className={styles.link} to='/indexselectors'>preset</Link>
-            <Link className={styles.link} to='/indexselectors'>tst</Link>
-            <Link className={styles.link} to='/indexselectors'>tst</Link>
-            <Link className={styles.link} to='/indexselectors'>tst</Link>
-            <Link className={styles.link} to='/indexselectors'>tst</Link>
-            <Link className={styles.link} to='/indexselectors'>tst</Link>
+            <Link className={styles.link} to={`/indexselectors/${naming.VIEWFILTER}`}>{naming.VIEWFILTER}</Link>
+            <Link className={styles.link} to={`/indexselectors/${naming.DYNAMICTEXT}`}>{naming.DYNAMICTEXT}</Link>
             <Link className={styles.link} to='/indexselectors'>tst</Link>
         </div>
     )

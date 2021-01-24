@@ -46,7 +46,7 @@ class Indexselectors extends Component {
         let selectorButton = Object.keys(this.props.state[selectorType]);
         
         let tabs = selectorButton.map((item,idx)=> { 
-            if (['selected','selectorsNumbering','optionsNumbering','inputTypesMain','inputTypesOptions','srcFn'].indexOf(item) !== -1) {
+            if (['selected','selectorsNumbering','optionsNumbering','inputTypesOptionsDesc','inputTypesMain','inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions'].indexOf(item) !== -1) {
                 //dont make buttons out of these
                 return null
             }
@@ -72,7 +72,7 @@ class Indexselectors extends Component {
                     {selectorMain}
                 </div>  
                     <div className={styles.dualcontainer}>
-                        <div className={styles.secContainer} ref={this.myref}>
+                         <div className={styles.secContainer}> {/* ref={this.myref} */}
                         <nav className={styles.optionNavBar}>
                             <button className={styles.button} onClick={this.props.addOption.bind(this,selectorType,this.props.state[selectorType].selected)}>Option +</button>
                             <button className={styles.submit} onClick={this.props.submit.bind(this,this.props.state[selectorType].selected,selectorType)}>Submit</button>

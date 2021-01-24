@@ -35,6 +35,18 @@ export default (state=initialState, action) => {
       let highest = Math.max.apply(Math, numbering)+1
       return highest;
     }
+
+    const getNextSubOptionIdx = (optionIdx) => {
+      console.log(optionIdx)
+      console.log(state[action.payload.seltype][state[action.payload.seltype].selected].options[optionIdx])
+     // debugger;
+      let numbering = state[action.payload.seltype][state[action.payload.seltype].selected].options[optionIdx].optionsSubNumbering;
+      console.log(numbering)
+      let highest = Math.max.apply(Math, numbering)+1
+      console.log(highest)
+      return highest;
+    }
+
     switch (action.type) {
      
       case actionTypes.ADD_SELECTOR:
@@ -76,7 +88,6 @@ export default (state=initialState, action) => {
   
        
       case actionTypes.SELECTED:
-        
           return {
             ...state,
             [action.payload.seltype]: {...state[action.payload.seltype], selected: action.payload.selected}
@@ -98,7 +109,7 @@ export default (state=initialState, action) => {
                         optionsNumbering: [...state[action.payload.seltype][action.payload.selected].optionsNumbering, newONum],
                       },
           }
-  }
+        }
   
       case actionTypes.REMOVE_OPTION:
 
@@ -137,11 +148,117 @@ export default (state=initialState, action) => {
             optionsNumbering: newNumbering}
             }
           };
-
-      case actionTypes.INPUT_CHANGE:
+      
+          case actionTypes.ADD_SUBOPTION:
             console.log(action)
             console.log(state)
-          if (action.payload.optionIdx != null) {
+            let newSONum = getNextSubOptionIdx(action.payload.optionIdx);
+            console.log(newSONum)
+ //         debugger;
+             //payload = selectorType: selectorType, selected: selected //later to identify to which selector to add
+             
+             return {
+              ...state,
+               [action.payload.seltype]: {...state[action.payload.seltype], 
+                            [action.payload.selected] : {
+                              ...state[action.payload.seltype][action.payload.selected],
+                              options:  {...state[action.payload.seltype][action.payload.selected].options,
+                                        [action.payload.optionIdx] : 
+                                         { ...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx],
+                                        optionsSubNumbering: [...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx].optionsSubNumbering, newSONum],
+                                        subOptions :
+                                          {...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx].subOptions,
+                                           [newSONum] : {...SELECTORSTATE['SELECTORSTATE'][action.payload.seltype][action.payload.seltype.concat('0')].options[0].subOptions[0]}
+                                          }
+                                          }
+                              },
+                          },
+              }
+            }
+     
+          case actionTypes.REMOVE_SUBOPTION:
+
+            let sopNum = state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx].optionsSubNumbering;
+              if (sopNum.length === 1) {
+                alert('Must Contain atleast one sub option')
+                return {
+                  ...state,
+                   [action.payload.seltype]: {...state[action.payload.seltype], 
+                                [state[action.payload.seltype].selected] : {
+                                  ...state[action.payload.seltype][state[action.payload.seltype].selected],
+                                  options: {...state[action.payload.seltype][state[action.payload.seltype].selected].options,
+                                            [action.payload.optionIdx] : {
+
+                                              ...state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx] ,
+                                              subOptions :
+                                              // {...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx].subOptions,
+                                             { [sopNum] : {...SELECTORSTATE['SELECTORSTATE'][action.payload.seltype][action.payload.seltype.concat('0')].options[0].subOptions[0]}
+                                              }
+                                              }
+                                            }
+                                    }
+                               }
+              }
+              };
+             let newSubNumbering =  sopNum.filter((item,idx)=> {
+                let keep = false;
+                console.log(action.payload)
+                console.log(item)
+                if (item !== action.payload.subOptionIdx) {
+                  console.log('keep')
+                  keep = true;
+                }
+                console.log('dont keep')
+                return keep
+              })
+              delete state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx].subOptions[action.payload.subOptionIdx]
+              return {
+                ...state,
+                 [action.payload.seltype]: {...state[action.payload.seltype], 
+                              [state[action.payload.seltype].selected] : {
+                                ...state[action.payload.seltype][state[action.payload.seltype].selected],
+                                options: {...state[action.payload.seltype][state[action.payload.seltype].selected].options,
+                                          [action.payload.optionIdx] : {
+                                            ...state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx] ,
+                                            optionsSubNumbering: newSubNumbering
+                                          }
+                                  }
+                             }
+            }
+            };
+            
+
+      //           case actionTypes.ADD_SUBOPTION:
+      //             console.log(action)
+      //             console.log(state)
+      //             let newSONum = getNextSubOptionIdx(action.payload.optionIdx);
+      //             console.log(newSONum)
+      //  //         debugger;
+      //              //payload = selectorType: selectorType, selected: selected //later to identify to which selector to add
+                   
+      //              return {
+      //               ...state,
+      //                [action.payload.seltype]: {...state[action.payload.seltype], 
+      //                             [action.payload.selected] : {
+      //                               ...state[action.payload.seltype][action.payload.selected],
+      //                               options:  {...state[action.payload.seltype][action.payload.selected].options,
+      //                                         [action.payload.optionIdx] : 
+      //                                          { ...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx],
+      //                                         optionsSubNumbering: [...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx].optionsSubNumbering, newSONum],
+      //                                         subOptions :
+      //                                           {...state[action.payload.seltype][action.payload.selected].options[action.payload.optionIdx].subOptions,
+      //                                            [newSONum] : {...SELECTORSTATE['SELECTORSTATE'][action.payload.seltype][action.payload.seltype.concat('0')].options[0].subOptions[0]}
+      //                                           }
+      //                                           }
+      //                               },
+      //                           },
+      //               }
+      //             }
+           
+                  
+      case actionTypes.INPUT_CHANGE:
+      //  debugger;
+          if (action.payload.optionIdx !== null && action.payload.subOptionIdx === null) {
             return {
               ...state,
               [action.payload.seltype]: {...state[action.payload.seltype], [state[action.payload.seltype].selected] : {...state[action.payload.seltype][state[action.payload.seltype].selected] , 
@@ -150,6 +267,28 @@ export default (state=initialState, action) => {
                                                                       [action.payload.inputData.name]: action.payload.inputData.value} }}
                                                                     }
                                                                      
+              };
+          }
+          else if (action.payload.optionIdx !== null && action.payload.subOptionIdx !== null) {
+            return {
+                    ...state,
+                    [action.payload.seltype]: {...state[action.payload.seltype], [state[action.payload.seltype].selected] : {
+                                                                ...state[action.payload.seltype][state[action.payload.seltype].selected] , 
+                                                                options: { 
+                                                                    ...state[action.payload.seltype][state[action.payload.seltype].selected].options, 
+                                                                    [action.payload.optionIdx] : {
+                                                                                ...state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx],
+                                                                                subOptions: {
+                                                                                   ...state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx].subOptions,
+                                                                                   [action.payload.subOptionIdx] : {
+                                                                                     ...state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.optionIdx].subOptions[action.payload.subOptionIdx],
+                                                                                     [action.payload.inputData.name] : action.payload.inputData.value} 
+                                                                                }
+                                                                              
+                                                                          }
+                                                                      }
+                                                                }
+                    }                                                   
               };
           }
           else {
@@ -165,16 +304,17 @@ export default (state=initialState, action) => {
       case actionTypes.SUBMIT:
 
           //dynamically get the correct source function to the specified selector type.
-          let srcFn = state[action.payload.seltype].selected.srcFn({...state[action.payload.seltype][state[action.payload.seltype].selected]});
+          console.log(state[action.payload.seltype])
+          let srcFnout = state[action.payload.seltype].srcFn({...state[action.payload.seltype][state[action.payload.seltype].selected]});
           return {
             ...state,
             [action.payload.seltype]: {...state[action.payload.seltype], 
                                   [state[action.payload.seltype].selected] : 
                                       {...state[action.payload.seltype][state[action.payload.seltype].selected] ,
-                                       html : srcFn() }
+                                       html : srcFnout }
             }
           }
-      //test
+      //test need to refresh the state to invoke proper change between paths
       case actionTypes.ROUTEPATH:
             return {
               ...state,

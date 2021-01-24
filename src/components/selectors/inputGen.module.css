@@ -49,9 +49,12 @@
 }
 
 .optionContainer {
-    background-color: rgb(136, 80, 66);
     border-style: inset;
     border-color: rgb(97, 95, 95);
+}
+
+.optionContainer, .seperator {
+    background-color: rgb(136, 80, 66);
 }
 
 .inputMain {
