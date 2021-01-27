@@ -12,13 +12,7 @@ export class navbar extends Component {
                <div className={styles.dropdown}>
                <button className={styles.dropbtn}>Dropdown</button>
                 <div className={styles.dropdown_content}>
-                 {/*    <Link className={styles.Link} to='/fakePanels'>Fake Panel Selector</Link>
-                     <Link className={styles.Link} to='/fakePanels'>tst</Link>
-                     <Link className={styles.Link} to='/fakePanels'>tst</Link>
-                     <Link className={styles.Link} to='/fakePanels'>tst</Link>
-                */}
                  <div className={styles.wrapper}> {links()}</div>
-               
                 </div>
               </div> 
             </div>

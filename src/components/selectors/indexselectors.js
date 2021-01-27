@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import * as actionTypes from '../../store/actions';
-//import store from '../../store/store'
+import store from '../../store/store'
 import { connect } from 'react-redux';
 
 //import PanelStack from './panelStack/panelStack-deprecated';
@@ -10,9 +10,10 @@ import InputGen from './inputGen';
 //import * as naming from '../../layout/naming';//not needed here for now obsolete to maintain dynamic.
 import styles from './indexselectors.module.css';
 
-//store.subscribe(()=>{console.log(store.getState())})
+store.subscribe(()=>{console.log(store.getState())})
 
 let selectorType ='';//window.location.pathname.split('/')[1];//global placeHolder;
+
 class Indexselectors extends Component {
 /*
     constructor(props) {
@@ -20,15 +21,18 @@ class Indexselectors extends Component {
         //this.myref = React.createRef();
     }
   */ 
-    updatePatch = (routePath,selectorType_,dispatch) => {
-        if (routePath !== selectorType_) {
-            dispatch(selectorType) 
-        }
-        return;
-    }
+    
+    // shouldComponentUpdate() {
+    //   // Reset register status to allow return to register page
+    //   if ( this.props.state.routePath !== this.props.match.params.sType ) {
+    //       return false
+    //   }
+    // }
+
+   
 
     render() {
-        /* in order to leep the selector type dynamic, i used the window.location to grab it,
+        /*  in order to leep the selector type dynamic, i used the window.location to grab it,
             before - this was defined here,
             and in the maptostate, i used explicit naming.PANELSTACK var.
             so for now, these 2 are obsolete.
@@ -37,16 +41,20 @@ class Indexselectors extends Component {
             this.props.rSrc;
         */
         selectorType = this.props.match.params.sType ;
-        this.updatePatch(this.props.state.routePath,selectorType,this.props.routePath)
+        console.log('state: '+this.props.state.routePath+' sel type: ' + selectorType)
+       // debugger;
+        //this.updatePatch(this.props.state.routePath,selectorType,this.props.routePath)
         console.log(selectorType)
+        //this.props.routePath(selectorType)
         window.history.pushState({}, null, `/${selectorType}`);//hide the indexselector component name without rendering
-        let selectorMain =  <InputGen.InputGenMain />;
-        let selectorOptions = <InputGen.InputGenOptions/>;
-        console.log(this.props)
+        let selectorMain =  <InputGen.InputGenMain stype={selectorType} />;//push the stype param from the route params - although in the input im using an alternative method to grab it
+        let selectorOptions = <InputGen.InputGenOptions stype={selectorType}/>;
         let selectorButton = Object.keys(this.props.state[selectorType]);
-        
+       
+       
         let tabs = selectorButton.map((item,idx)=> { 
-            if (['selected','selectorsNumbering','optionsNumbering','inputTypesOptionsDesc','inputTypesMain','inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions'].indexOf(item) !== -1) {
+            if (['selected','selectorsNumbering','optionsNumbering','inputTypesOptionsDesc','inputTypesMain',
+                'inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions'].indexOf(item) !== -1) {
                 //dont make buttons out of these
                 return null
             }
@@ -128,10 +136,8 @@ const mapDispatchToPorps = dispatch => {
                               return ( dispatch({type: actionTypes.REMOVE_OPTION}));},
         removeSelector: (selectorType,event) => {  event.preventDefault();
                                       event.stopPropagation();
-                                      console.log('aa')
                                       return dispatch ({type: actionTypes.REMOVE_SELECTOR,payload :{seltype : selectorType}})},
-        submit: (selected,selectorType) => dispatch({type: actionTypes.SUBMIT, payload : { selected: selected,seltype: selectorType}}),
-        routePath: (name) => dispatch({type: actionTypes.ROUTEPATH, payload : name})
+        submit: (selected,selectorType) => dispatch({type: actionTypes.SUBMIT, payload : { selected: selected,seltype: selectorType}})
     }
 }
 

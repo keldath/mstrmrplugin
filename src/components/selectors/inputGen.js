@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import * as actionTypes from '../../store/actions'
-import store from '../../store/store'
+//import store from '../../store/store'
 import { connect } from 'react-redux';
 
 //import { PANELSTACK } from '../../layout/naming';
@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 //import styles from './panelStack/panelStack.module.css';
 import styles from './inputGen.module.css';
 
-store.subscribe(()=>{console.log('updated state:' ,store.getState())})
+//store.subscribe(()=>{console.log('updated state:' ,store.getState())})
 
 /* This will define the selector type all the inputs that are collected from this selector
 
@@ -28,12 +28,16 @@ class InputGenMain extends Component {
 
         event.target.value = '';
     }
-    
+   
+
     render() {
-        const seltypeInp = this.props.seltype
+        //const seltypeInp = this.props.seltype
+        const seltypeInp = this.props.stype
+        console.log(seltypeInp)
+      //  debugger;
+        console.log(this.props)
         //const mainInputs = this.props[PANELSTACK].inputTypesMain;
         const mainInputs = this.props[seltypeInp].inputTypesMain;
-        console.log(seltypeInp)
         /*note input word for in jsx is htmlFor amd the usage of name*/
         let inputs = mainInputs.map((item,idx)=>{
             return (
@@ -41,7 +45,7 @@ class InputGenMain extends Component {
                     <label htmlFor={item} className={styles.test} ><span className={styles.labelTag}>{item}</span>
                         <input type="text" onChange={this.props.updateParmeters.bind(this,'maindef',null,null,seltypeInp)} name={item}
                                         onDoubleClick={this.cleanInput.bind(this)}
-                                        value={this.props[seltypeInp][this.props.selected].maindef[item]}/>
+                                        value={this.props[seltypeInp][this.props[seltypeInp].selected].maindef[item]}/>
                     </label>
                 </React.Fragment>
             )
@@ -71,13 +75,17 @@ class InputGenOptions extends Component {
     }
  //value={this.props.panelStack[this.props.selected].options[item]}
     render() {
-        const seltypeInp = this.props.seltype
+        //const seltypeInp = this.props.seltype
+        const seltypeInp = this.props.stype
+        //console.log(this.props)
+        //debugger;
         //const optionsInput = this.props[PANELSTACK].inputTypesOptions;
         const optionsInput = this.props[seltypeInp].inputTypesOptions;
         const subOptionsInput = this.props[seltypeInp].inputTypesSubOptions;
-        let selected = this.props.selected
-        let selectedObj = this.props[seltypeInp][this.props.selected];
-
+        let selected = this.props[seltypeInp].selected
+        let selectedObj = this.props[seltypeInp][selected];
+        console.log(selectedObj)
+      //  debugger;
         if (selectedObj.optionsNumbering.length === 0) {
             //in case all options were removed
             return null;
@@ -88,14 +96,12 @@ class InputGenOptions extends Component {
             //if option 0 is deleted, and theres option 1, it will cause an error, so always use the item it self
             let secInputs = optionsInput.map((item2,idx2)=> {
                 //---------------------------options input generator------------------------
-      //          console.log(this.props[seltypeInp][this.props.selected].options[item1][item2])
-    //   debugger;
                 return (
                         <React.Fragment  key={(selected+'option'+item2+item1)}>
                             <label htmlFor={item2} className={styles.test}><span className={styles.labelOption}>{item2}</span>
-                            <input type="text"  name={item2} onChange={this.props.updateParmeters.bind(this,'options',item1,null,seltypeInp)}
+                            <input type="text"  onChange={this.props.updateParmeters.bind(this,'options',item1,null,seltypeInp)}  name={item2}
                             onDoubleClick={this.cleanInput.bind(this)}
-                            value={this.props[seltypeInp][this.props.selected].options[item1][item2]} />
+                            value={this.props[seltypeInp][selected].options[item1][item2]} />
                             </label>
                         </React.Fragment>
                 )
@@ -137,11 +143,16 @@ class InputGenOptions extends Component {
                                 <span className={styles.optionName}>option {item1}:</span> 
                                 <button className={styles.removeBtn} onClick={this.props.removeOption.bind(this,item1,seltypeInp)}>-</button>
                                 {subOptionsInput !== undefined ?
-                                <button className={styles.removeBtn} onClick={this.props.addSubOption.bind(this,seltypeInp,selected,item1)}>+</button> 
-                                : null}
+                                    <button className={styles.removeBtn} onClick={this.props.addSubOption.bind(this,seltypeInp,selected,item1)}>+</button> 
+                                    : null}
                                 <div>
-                                    
                                      {secInputs}
+                                     {/* {subOptionContainer !== null ? <div className={'seperator'} 
+                                                                        style={{"fontSize":"2.5vh","textAlign":"left","backgroundColor": "rgb(109, 48, 48)"}}>
+                                                                            Sub Option:</div> : null } 
+                                     {subOptionContainer} */}
+                                </div> 
+                                 <div>
                                      {subOptionContainer !== null ? <div className={'seperator'} 
                                                                         style={{"fontSize":"2.5vh","textAlign":"left","backgroundColor": "rgb(109, 48, 48)"}}>
                                                                             Sub Option:</div> : null } 
@@ -152,8 +163,9 @@ class InputGenOptions extends Component {
         })
 
         //-----------------------complete component---------------------
+        ///random key here breaks the input focus so i removed key={(Math.floor((Math.random() *100000 -1)))}
         return (  
-            <React.Fragment key={(Math.floor((Math.random() *100000 -1)))}> 
+            <React.Fragment > 
                 {optionContainer} 
             </React.Fragment>
         )
@@ -167,10 +179,10 @@ const mapStateToProps = state => {
     //wanted to create a dynamic not hard coded state based on the selecor that was 
     //havnt found anouther way yet. 11012021
     const typeSelector = window.location.pathname.replace('/indexselectors/','').replace('/','')
-    console.log(typeSelector)
+    //this above is not needed - getting it from the indexselector directly - this.props.stype
     return {
-        [typeSelector]: state[typeSelector],
-        selected: state[typeSelector].selected,
+        // [typeSelector]: state[typeSelector],
+        ...state,
         seltype: typeSelector
     }
 
@@ -195,7 +207,7 @@ const mapDispatchToPorps = dispatch => {
         removeOption: (idx,seltype) => dispatch({type: actionTypes.REMOVE_OPTION, payload: {idx: idx, seltype: seltype}})  ,
         removeSubOption: (seltype,optionIdx,subOptionIdx) => dispatch({type: actionTypes.REMOVE_SUBOPTION, payload: {seltype: seltype 
                                                                                                                     ,optionIdx: optionIdx
-                                                                                                                    ,subOptionIdx: subOptionIdx,}})                                                             
+                                                                                                                    ,subOptionIdx: subOptionIdx,}})                               
     }
 }
 

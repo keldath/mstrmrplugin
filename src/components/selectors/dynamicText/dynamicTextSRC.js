@@ -15,9 +15,9 @@
 
     return (
         
-     `<div class='SelectorsContainer' id='${'dynamicHeadline'.concat(main.id)}' type='text' affectedtarget='${main.affectedtarget}' mask='${main.mask}' subselector='${main.mask}'>
+     `<div class='SelectorsContainer' id='${'dynamicHeadline'.concat(main.id)}' type='text' affectedtarget='${main.affectedtarget}' mask='${main.mask}' subselector='${main.mask}'>${main.default}
            <div class='Container_drop_down'>
-             <button class='Container_btn' onmouseenter="event.stopPropagation(),${selectorFn}">'${main.text}'</button>
+             <button class='Container_btn' onmouseenter="event.stopPropagation(),${selectorFn}">${main.text}</button>
            <div class='Container_drop_list'>
            <!-- js adds items here -->
            <!--pre list items divided into options and its items ro replace-->

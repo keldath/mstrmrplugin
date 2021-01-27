@@ -1,0 +1,13 @@
+
+
+1. test code on allot base
+2. convert to new free code
+3. do UI improvemets
+--beta 1 on firebase?
+4. do code improvements
+5. optimisatins (use ref for inputs)
+6. do authentication access
+--beta 2 on firebase?
+7. add mstr info - functions, tips and such
+8. add more info to the UI
+9. do free none plugin code for selectors

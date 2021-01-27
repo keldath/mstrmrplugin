@@ -21,7 +21,7 @@ add an toption type to the inputs of the selector
           basedOn='${optionData.subOptions[item].basedOn}' topx='${optionData.subOptions[item].topx}' 
           operator='${optionData.subOptions[item].operator}' selectTab='${optionData.subOptions[item].selectTab}'>
           parentselctrOp='${optionData.subOptions[item].parentselctrOp}'
-          <div id='filteron'>'${optionData.subOptions[item].filterOn}'</div>
+          <div id='filteron'>${optionData.subOptions[item].filterOn}</div>
         </div>
         `)
     })

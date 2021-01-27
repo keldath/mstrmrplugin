@@ -10,7 +10,6 @@ export const SUBMIT = 'SUBMIT';
 export const SELECTED = 'SELECTED';
 export const FIRSTSELECTOR = 'FIRSTSELECTOR';
 
-export const ROUTEPATH = 'ROUTEPATH';
 
 
 

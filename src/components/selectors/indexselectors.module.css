@@ -27,12 +27,12 @@
     order: 2
 }
 .frstContainer {
-    height: 20%;
+    /* height: 20%; */
     order: 1;
 }
 .secContainer {
    /*order: 3;*/
-   width: 60%;
+   width: 59.6%;
    overflow-y: auto;
    overflow-x: hidden;
 }
