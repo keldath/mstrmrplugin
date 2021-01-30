@@ -1,46 +1,51 @@
 
 
  const presetSRC = (props) => {
-     const options = props.optionsNumbering.map((item,idx)=>{
-      
-        const options = props.optionsNumbering.map((item,idx)=>{
-            let optionData = props.options[item]
-        
-            let subOptions = optionData.optionsSubNumbering.map((item,idx)=>{
-        
-              return (
-                    `<div id='atrmtr' linker='${optionData.subOptions[item].linker}' iname='${optionData.subOptions[item].iname}' 
-                                        did='${optionData.subOptions[item].did}' zoneidx='${optionData.subOptions[item].zoneidx}' zoneposition='${optionData.subOptions[item].zoneposition}'>
-                    </div>`
-                )
-            })
-        
-            return (
-                `<!--OPTION ${item} -->
-                <div class='presetoptions' linker='${optionData.linker}' alias='${optionData.alias}'
-                                datasname='${optionData.datasname}' datasid='${optionData.datasid}' 
-                                props='${optionData.props}' subsalias='${optionData.subsalias}'
-                                parentselctrOp='${optionData.parentselctrOp}'>
-                        ${subOptions}  
-                <div/>`
-              )
-            }
-        )        
+     
+    const options = props.optionsNumbering.map((item,idx)=>{
+        let optionData = props.options[item]
+    
+        let subOptions = optionData.optionsSubNumbering.map((item,idx)=>{
+    
+          return (
+                `<div id='atrmtr' linker='${optionData.subOptions[item].linker}' iname='${optionData.subOptions[item].iname}' 
+                                    did='${optionData.subOptions[item].did}' zoneidx='${optionData.subOptions[item].zoneidx}' zoneposition='${optionData.subOptions[item].zoneposition}'>
+                </div>`
+            )
+        })
+    
+        return (
+            `<!--OPTION ${item} -->
+            <div class='presetoptions' linker='${optionData.linker}' alias='${optionData.alias}'
+                            datasname='${optionData.datasname}' datasid='${optionData.datasid}' 
+                            props='${optionData.props}' subsalias='${optionData.subsalias}'
+                            parentselctrOp='${optionData.parentselctrOp}'>
+                    ${subOptions}  
+            <div/>`
+          )
         }
-    )
-
-    const gridFilters = null;
-    const dynamicHeadline = null;
+    )        
+    
+    //
+    //left these ones out, to omuch work for an existing thing.
+    //
+    //grid filter is an older mechanizem that allow to use a grid visualisation as a filter on anothe visualization
+    //in msyt 10.9 there were no viewFilter options so i improvised with this one and hid the grid it self.
+    //in later mstr - viewfilter selector can filter specific values of a visualizatiob.
+    const gridFilters = '';
+    //this changes a box text according to the option choice of the main selector parent option.
+    //since then i created a stand alone dynamic selecto that does the same thing , but as a separated selector.
+    const dynamicHeadline = '';
 
     const main = props.maindef;
     console.log(main)
-
-    const selectorFn = (event,id,linker) => {return window.scSelectorsEffect(id,linker)};
+    //dont need the second refrence
+    //const selectorFn = (event) => {return window.scSelectorsEffect(props.maindef.linker)};
     return (
       `
       <div class='SelectorsContainer' id='${main.id}' type='preset' affectedtarget='${main.affectedtarget}' mask='${main.mask}' linker='${main.linker}' subselector='${main.subselector}' fakeheadline='${main.fakeheadline}'>${main.text}&nbsp;&nbsp;
         <div class='Container_drop_down' linker='${main.linker}'>
-          <button class='Container_btn' name='${main.id}' linker='${main.linker}' onmouseenter='event.stopPropagation(),${selectorFn.bind(this,`${main.id}`,`${main.linker}`)}'>${main.default}</button>
+          <button class='Container_btn' name='${main.id}' linker='${main.linker}' onmouseenter="event.stopPropagation(),window.scSelectorsEffect('${main.id}','${main.linker}'))">${main.default}</button>
         <div class='Container_drop_list' linker='${main.linker}'>
             <!-- js adds items here -->
         </div>
