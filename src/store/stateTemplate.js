@@ -15,6 +15,8 @@ const geneRateID = (str) => {
 
 export const SELECTORSTATE = { 
     [naming.PANELSTACK] : {
+      description: 'Allows a switch between existing Visualizations - place one on top of the other (using free style layout)\
+                    and gain the effect of a Panel Stack'
       inputTypesMain: ['text','default','mask','subselector'],
       inputTypesOptions:  ['alias','Target'],
       inputTypesOptionsDesc: [],

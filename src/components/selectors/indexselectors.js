@@ -13,6 +13,7 @@ import styles from './indexselectors.module.css';
 store.subscribe(()=>{console.log(store.getState())})
 
 let selectorType ='';//window.location.pathname.split('/')[1];//global placeHolder;
+const beautify_html = require('js-beautify').html;
 
 class Indexselectors extends Component {
 /*
@@ -54,7 +55,7 @@ class Indexselectors extends Component {
        
         let tabs = selectorButton.map((item,idx)=> { 
             if (['selected','selectorsNumbering','optionsNumbering','inputTypesOptionsDesc','inputTypesMain',
-                'inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions'].indexOf(item) !== -1) {
+                'inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions','description'].indexOf(item) !== -1) {
                 //dont make buttons out of these
                 return null
             }
@@ -88,12 +89,18 @@ class Indexselectors extends Component {
                         {selectorOptions}
                         <br/>
                         </div>
+                        <div>
+                            hey
+                        </div>
                         <div className={styles.thrdContainer}>
                             <br/>
                             <span style={{display:'block', fontSize: '14px',textAlign: 'center'}} >Selector's HTML Template</span>
                             <br/>
-                            {this.props.state[selectorType][this.props.state[selectorType].selected].html}
+                            <div  style={{whiteSpace:'pre-wrap', fontSize: '10px'}}>
+                            {beautify_html(this.props.state[selectorType][this.props.state[selectorType].selected].html)}
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

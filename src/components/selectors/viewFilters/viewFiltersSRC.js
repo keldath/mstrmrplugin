@@ -54,7 +54,7 @@ add an toption type to the inputs of the selector
   const selectorFn = (event) => {return window.Allot.plugins.scriptsFN.CS_Custom_Selectors.advViewFilters(event,'buildList')};
   return (
 
-    `<div class='SelectorsContainer' id='${main.id}' type='viewFilter' linkedto='${main.linkedto}' linked='${main.linked}' affectedtarget='${main.affectedtarget}' 
+   `<div class='SelectorsContainer' id='${main.id}' type='viewFilter' linkedto='${main.linkedto}' linked='${main.linked}' affectedtarget='${main.affectedtarget}' 
         mask='${main.mask}' linker='${main.linker}' subselector='${main.subselector}' fakeheadline='${main.fakeheadline}' style='display: none;'> ${main.text}
         <div class='Container_drop_down' linker='${main.linker}'>
           <button class='Container_btn' name='${main.id}' linker='${main.linker}' onmouseenter="event.stopPropagation(),${selectorFn}">${main.default}</button>

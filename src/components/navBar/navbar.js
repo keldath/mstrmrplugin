@@ -12,7 +12,7 @@ export class navbar extends Component {
                <div className={styles.dropdown}>
                <button className={styles.dropbtn}>Dropdown</button>
                 <div className={styles.dropdown_content}>
-                 <div className={styles.wrapper}> {links()}</div>
+                 <div className={styles.wrapper}> {links('grid')}</div>
                 </div>
               </div> 
             </div>

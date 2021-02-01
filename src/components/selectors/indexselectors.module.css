@@ -2,8 +2,8 @@
 
 .mainContainer {
     background-color: brown;
-    height: 70vh;
-    width: 85vw;
+    height: 75vh;
+    width: 95vw;
     display: block;
     flex-flow: row wrap;
    /* border-width: 1px;
