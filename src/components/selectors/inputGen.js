@@ -172,7 +172,8 @@ class InputGenOptions extends Component {
     }
 }
 
-
+// class InputGenSubOptions extends Component {
+// }
 
 const mapStateToProps = state => {
     

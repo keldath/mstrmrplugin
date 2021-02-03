@@ -63,7 +63,11 @@ class Indexselectors extends Component {
                     <button key={idx} className={styles.button} onClick={this.props.setSetected.bind(this,item,selectorType)} onContextMenu={this.props.removeSelector.bind(this,selectorType)} title={'Right click to remove'}>{item}</button>
                 )
         });
-       
+        //if the selector have a suboptions - create a different box set for the selector.
+        let subOptionContainer = this.props.state[selectorType][selectorType.concat('0')].options[0]?.optionsSubNumbering !== undefined 
+                                 ? <div>hey</div> : null;
+                             
+
         return (
             <div style={{display:'block'}}>
                 <br/><br/><br/>
@@ -89,9 +93,7 @@ class Indexselectors extends Component {
                         {selectorOptions}
                         <br/>
                         </div>
-                        <div>
-                            hey
-                        </div>
+                        {subOptionContainer}
                         <div className={styles.thrdContainer}>
                             <br/>
                             <span style={{display:'block', fontSize: '14px',textAlign: 'center'}} >Selector's HTML Template</span>

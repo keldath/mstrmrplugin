@@ -14,19 +14,19 @@ const geneRateID = (str) => {
 }
 
 export const SELECTORSTATE = { 
-    [naming.PANELSTACK] : {
+    PanelStack : {
       description: 'Allows a switch between existing Visualizations - place one on top of the other (using free style layout)\
-                    and gain the effect of a Panel Stack'
+                    and gain the effect of a Panel Stack',
       inputTypesMain: ['text','default','mask','subselector'],
       inputTypesOptions:  ['alias','Target'],
       inputTypesOptionsDesc: [],
       selectorsNumbering: [0],
-      selected: naming.PANELSTACK.concat('0'),
+      selected: 'PanelStack0',
       srcFn: PanelStackSRC,
-      [naming.PANELSTACK.concat('0')]: {
+      PanelStack0: {
           optionsNumbering:[0],
           maindef : {
-              id: geneRateID(naming.PANELSTACK.concat('0-')),
+              id: geneRateID('PanelStack0-'),
               linker: '1',
               text: '',
               default: '',
@@ -251,6 +251,8 @@ export const SELECTORSTATE = {
     },
 };
 
+
+export const selectorTypes = Object.keys(SELECTORSTATE);
 
 /*
     use  style='display: none;' to hide a selector if you want 0 place in the SelectorsContainer main div , as an attribute.

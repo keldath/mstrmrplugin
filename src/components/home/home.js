@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
 
 import links from './links';
 import styles from './home.module.css';
 
-import * as SELECTORSTATE from '../../store/stateTemplate';
+import {SELECTORSTATE} from '../../store/stateTemplate';
 //import store from '../../store/store';
 
 //store.subscribe(()=>{console.log(store.getState())})
@@ -13,7 +12,8 @@ export class home extends Component {
 
     state = {
         infoBoxStatus: false,
-        target: ''
+        target: '',
+        desc: ''
     }
 
     componentDidMount () {
@@ -22,24 +22,27 @@ export class home extends Component {
 
     infoBox = (event) => {
 
-        var posX = event.clientX;
-        var posY = event.clientY;
-        console.log(posX,posY)
+        console.log(event.type)
+   
+        let el = event.target.innerText
         
-        let  el = document.elementFromPoint(posX, posY);
-        console.log(el)
-         if (this.state.target === el.text) {
-             return
-         }
-        if(!el.href) {
-            this.setState({infoBoxStatus : false })
+        if (event.type === "mouseout") {
+            this.setState({infoBoxStatus: false,
+                           target: '',
+                           desc: ''
+            })
             return
         }
-        console.log(el.text)
-         this.setState({target: el.text,
-                infoBoxStatus : true})
+        
+       // debugger;
+        if (el === this.state.target) {
+             return
+        }
+        
+        this.setState({target: el,
+                infoBoxStatus : true,
+                desc: SELECTORSTATE[el]?.description})
     }
-
     
     render() {
         window.history.pushState({}, null, `/Home`);//add a Home Url Name
@@ -49,6 +52,7 @@ export class home extends Component {
             ibox = <div className={styles.infoBox}>
                     info box for selectors 
                     {this.state.target}
+                    {this.state.desc}
                    </div>
         }
 
@@ -59,8 +63,8 @@ export class home extends Component {
                 <br/>
                 <p>choose the selector you would like to create</p>
                 <div className={styles.wrapper}>
-                    <div className={styles.linksBox} onMouseMove={this.infoBox.bind(this)} onMouseLeave={this.infoBox.bind(this)}>
-                      {links()}
+                    <div className={styles.linksBox}>
+                      {links('',this.infoBox.bind(this))}
                     </div>
                 </div>
                 <br/>
@@ -71,18 +75,5 @@ export class home extends Component {
     }
 }
 
-const mapStateToProps = state => {
-
-    return {
-        counter: state.counter
-    }
-}
-
-const mapDispatchToPorps = dispatch => {
-    return {
-      
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToPorps) (home);
+export default home;
 

@@ -15,9 +15,17 @@
 
 .infoBox {
     background-color: rgb(85, 0, 0);
-    width: 600px;
+    width: 700px;
     height: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     display: inline-block;
   }
+
+.notActive {
+      display: none;
+  }
+
+.active {
+    display: inline-block;
+}
