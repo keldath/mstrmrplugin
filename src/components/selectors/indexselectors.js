@@ -50,12 +50,14 @@ class Indexselectors extends Component {
         window.history.pushState({}, null, `/${selectorType}`);//hide the indexselector component name without rendering
         let selectorMain =  <InputGen.InputGenMain stype={selectorType} />;//push the stype param from the route params - although in the input im using an alternative method to grab it
         let selectorOptions = <InputGen.InputGenOptions stype={selectorType}/>;
+        let selectorSubOptions = <InputGen.InputGenSubOptions stype={selectorType}/>;
+       // console.log(selectorOptions)
         let selectorButton = Object.keys(this.props.state[selectorType]);
        
        
         let tabs = selectorButton.map((item,idx)=> { 
             if (['selected','selectorsNumbering','optionsNumbering','inputTypesOptionsDesc','inputTypesMain',
-                'inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions','description'].indexOf(item) !== -1) {
+                'inputTypesOptions','srcFn','optionsSubNumbering','inputTypesSubOptions','description','selectedOption'].indexOf(item) !== -1) {
                 //dont make buttons out of these
                 return null
             }
@@ -64,13 +66,25 @@ class Indexselectors extends Component {
                 )
         });
         //if the selector have a suboptions - create a different box set for the selector.
-        let subOptionContainer = this.props.state[selectorType][selectorType.concat('0')].options[0]?.optionsSubNumbering !== undefined 
-                                 ? <div>hey</div> : null;
-                             
+        let subOptions =  this.props.state[selectorType][selectorType.concat('0')].options; 
+        let checkSubOptions = subOptions[Object.keys(subOptions)[0]]?.optionsSubNumbering !== undefined;
+        let subOptionContainer = checkSubOptions  ? <div className={styles.secContainerSub}>{selectorSubOptions}</div> : null;        
+        console.log(this.props.state[selectorType][selectorType.concat('0')].options[0]?.optionsSubNumbering) 
 
+        let htmlBox =  <div className={checkSubOptions ? styles.thrdContainerSub : styles.thrdContainer}>
+                       <button className={styles.submit} onClick={this.props.submit.bind(this,this.props.state[selectorType].selected,selectorType)}>Submit</button>
+                       <br/>
+                       <span style={{display:'block', fontSize: '14px',textAlign: 'center'}} >Selector's HTML Template</span>
+                       <br/>
+                       <div  style={{whiteSpace:'pre-wrap', fontSize: '10px'}}>
+                       {beautify_html(this.props.state[selectorType][this.props.state[selectorType].selected].html)}
+                       </div>
+    </div>
+        
+        //debugger;
         return (
-            <div style={{display:'block'}}>
-                <br/><br/><br/>
+            <div style={{height:'95%'}}>
+                <br/>
                 im a {selectorType} selector
                 <br/>
                 <br/>
@@ -85,25 +99,19 @@ class Indexselectors extends Component {
                     {selectorMain}
                 </div>  
                     <div className={styles.dualcontainer}>
-                         <div className={styles.secContainer}> {/* ref={this.myref} */}
-                        <nav className={styles.optionNavBar}>
-                            <button className={styles.button} onClick={this.props.addOption.bind(this,selectorType,this.props.state[selectorType].selected)}>Option +</button>
-                            <button className={styles.submit} onClick={this.props.submit.bind(this,this.props.state[selectorType].selected,selectorType)}>Submit</button>
-                        </nav>   
-                        {selectorOptions}
-                        <br/>
+                         <div className={checkSubOptions ? styles.secContainerwithSub : styles.secContainer }> {/* ref={this.myref} */}
+                            <nav className={styles.optionNavBar}>
+                                <button className={styles.submit} onClick={this.props.addOption.bind(this,selectorType,this.props.state[selectorType].selected)}>Option +</button>
+                               
+                            </nav>   
+                            {selectorOptions}
+                            <br/>
                         </div>
                         {subOptionContainer}
-                        <div className={styles.thrdContainer}>
-                            <br/>
-                            <span style={{display:'block', fontSize: '14px',textAlign: 'center'}} >Selector's HTML Template</span>
-                            <br/>
-                            <div  style={{whiteSpace:'pre-wrap', fontSize: '10px'}}>
-                            {beautify_html(this.props.state[selectorType][this.props.state[selectorType].selected].html)}
-                            </div>
-                        </div>
-                        
+                        {checkSubOptions ? null : htmlBox}
                     </div>
+                       {checkSubOptions ? htmlBox : null}
+                    
                 </div>
             </div>
         )

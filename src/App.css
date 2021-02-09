@@ -14,7 +14,10 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  /* background: linear-gradient(3deg, rgba(55,7,7,0.96) 10%, rgba(1,1,14,1) 81%); */
+  /* background:  linear-gradient(3deg, rgb(209 203 203 / 96%) 10%, rgb(87 73 73) 81%);  */
+  background:  linear-gradient(3deg, rgb(230 218 218 / 96%) 10%, rgb(48 0 0) 81%);
   min-height: 100vh;
   display: block;
   align-items: center;

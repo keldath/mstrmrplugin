@@ -106,12 +106,14 @@ export default (state=initialState, action) => {
       case actionTypes.REMOVE_OPTION:
 
         let opNum = state[action.payload.seltype][state[action.payload.seltype].selected].optionsNumbering;
+        let defaultoption = Object.keys(state[action.payload.seltype][state[action.payload.seltype].selected].options)[0]
         if (opNum.length === 1) {
           alert('Must Contain atleast one option')
           //instead of delete the option it will reset the one existing and clean its values.
           return {
             ...state,
-             [action.payload.seltype]: {...state[action.payload.seltype], 
+             [action.payload.seltype]: {...state[action.payload.seltype],
+                          selectedOption: defaultoption,
                           [state[action.payload.seltype].selected] : {
                             ...state[action.payload.seltype][state[action.payload.seltype].selected],
                             options: {...state[action.payload.seltype][state[action.payload.seltype].selected].options,
@@ -128,10 +130,12 @@ export default (state=initialState, action) => {
           return keep
         })
         delete state[action.payload.seltype][state[action.payload.seltype].selected].options[action.payload.idx]
+        let optionsList = state[action.payload.seltype][state[action.payload.seltype].selected].options
         return {
           ...state,
           [action.payload.seltype]: {...state[action.payload.seltype], [state[action.payload.seltype].selected] : {...state[action.payload.seltype][state[action.payload.seltype].selected] , 
-            optionsNumbering: newNumbering}
+            optionsNumbering: newNumbering},
+            selectedOption: Object.keys(optionsList)[0]
             }
           };
       
@@ -245,8 +249,18 @@ export default (state=initialState, action) => {
                                                                       [action.payload.inputData.name]: action.payload.inputData.value} }}
                                                                      
               };
+
           }          
       
+      case  actionTypes.SELECTEDOPTION:
+          console.log(action.payload)
+          return {
+            ...state,
+            [action.payload.seltype]: {...state[action.payload.seltype], 
+                                        selectedOption: action.payload.optionIdx
+                                      }
+                                                                   
+            }; 
       case actionTypes.SUBMIT:
 
           //dynamically get the correct source function to the specified selector type.

@@ -1,54 +1,90 @@
 
 
 .mainContainer {
-    background-color: brown;
-    height: 75vh;
+    /* background-color: brown; */
+    /* background: linear-gradient(90deg, rgba(138,52,26,0.9528186274509804) 0%, rgba(181,82,42,1) 46%, rgba(172,29,29,1) 100%); */
+    /* background:  linear-gradient(3deg, rgb(209 203 203 / 96%) 10%, rgb(87 73 73) 81%); */
+    background:  linear-gradient(180deg, rgb(26 25 28 / 96%) 10%, rgb(134 134 134) 81%);
+     height: 50%; 
     width: 95vw;
-    display: block;
-    flex-flow: row wrap;
+    /* display: block; */
+    /* flex-flow: row wrap; */
    /* border-width: 1px;
     border-style: solid;
     border-color: rgb(219, 24, 24);*/
     margin: auto;
 }
 
-.frstContainer , .secContainer, .thrdContainer , .dualcontainer {
-    background-color: rgb(109, 48, 48);
-    border-width: 1px;
-    flex: 1 100%;
-    border-style: dashed;
-    border-color: rgb(255, 172, 161);
+.frstContainer , .secContainer, .secContainerSub, .secContainerwithSub, .thrdContainer ,.thrdContainerSub, .dualcontainer {
+    /* background-color: rgb(109, 48, 48); */
+    /* background: linear-gradient(180deg, rgba(117,7,7,0.96) 10%, rgba(56,4,4,1) 81%); */
+    /* flex: 1 100%; */
+    border-style: solid;
+    display: block;
+    border-color: linear-gradient(3deg, rgb(230 218 218 / 96%) 10%, rgb(48 0 0) 81%);
+}
+
+ .secContainer, .secContainerSub, .secContainerwithSub, .thrdContainer ,.thrdContainerSub, .dualcontainer {
+    /* background-color: rgb(109, 48, 48); */
+    /* background: linear-gradient(180deg, rgba(117,7,7,0.96) 10%, rgba(56,4,4,1) 81%); */
+    background:  linear-gradient(180deg, rgb(26 25 28 / 96%) 10%, rgb(134 134 134) 81%);
 }
 
 .dualcontainer {
-    flex-flow: column wrap;
+    /* flex-flow: column wrap; */
+    /* display: flex; */
+     height: 100%; 
+    /* order: 2 */
     display: flex;
-    height: 77%;
-    order: 2
 }
-.frstContainer {
-    /* height: 20%; */
+/* .frstContainer {
+    height: 20%; 
     order: 1;
-}
+} */
 .secContainer {
    /*order: 3;*/
    width: 59.6%;
    overflow-y: auto;
    overflow-x: hidden;
 }
+
+.secContainerwithSub {
+    /*order: 3;*/
+    /* width: 30%; */
+    width: 45%;
+    overflow-y: auto;
+    overflow-x: hidden;
+ }
+ 
+.secContainerSub {
+    /*order: 3;*/
+    /* width: 40.5%; */
+    width: 55%;
+    overflow-y: auto;
+    overflow-x: hidden;
+ }
+
 .thrdContainer {
    /* order: 4;*/
-   width: 40%;
+    width: 39%; 
    font-size: 10px;
    text-align: left;
 }
 
+.thrdContainerSub {
+    /* order: 4;*/
+    height: 27.5%;
+    font-size: 10px;
+    text-align: left;
+    overflow-y: auto;
+ }
 .button {
     display: flex;
 }
 
 .submit {
-    flex: auto;
+    /* flex: auto; */
+    width: -webkit-fill-available;
 }
 
 .optionNavBar {
@@ -56,9 +92,6 @@
     display: flex;
 }
 
-.selectorNavBar {
-    background-color:  #282c34;
-}
 .optionContainer {
     background-color: rgb(136, 80, 66);
     border-style: inset;
@@ -68,4 +101,6 @@
     display: flex;
     width: 85vw;
     overflow-x: auto;
+    position: fixed;
+    margin-top: -21px;
 }

@@ -15,6 +15,8 @@ export class navbar extends Component {
                  <div className={styles.wrapper}> {links('grid',()=>{})}</div>
                 </div>
               </div> 
+              <Link className={styles.Link} to='/'>MSRTPEDIA-DEV</Link> 
+              <Link className={styles.Link} to='/'>SAVESEL-DEV</Link> 
             </div>
                 
         )

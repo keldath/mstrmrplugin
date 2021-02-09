@@ -22,6 +22,7 @@ export const SELECTORSTATE = {
       inputTypesOptionsDesc: [],
       selectorsNumbering: [0],
       selected: 'PanelStack0',
+      selectedOption: 0,
       srcFn: PanelStackSRC,
       PanelStack0: {
           optionsNumbering:[0],
@@ -49,6 +50,7 @@ export const SELECTORSTATE = {
       inputTypesOptionsDesc: [],
       selectorsNumbering: [0],
       selected: naming.SHEETPANEL.concat('0'),
+      selectedOption: 0,
       srcFn: sheetPanelSRC,
       [naming.SHEETPANEL.concat('0')]: {
         optionsNumbering:[0],
@@ -76,6 +78,7 @@ export const SELECTORSTATE = {
       inputTypesSubOptions: ['iname','condIdx','objectID','datasetID','basedOn','topx','operator','selectTab','parentselectrOp','filterOn'],
       selectorsNumbering: [0],
       selected: naming.VIEWFILTER.concat('0'),
+      selectedOption: 0,
       srcFn: viewFiltersSRC,
       [naming.VIEWFILTER.concat('0')]: {
         optionsNumbering:[0],
@@ -125,6 +128,7 @@ export const SELECTORSTATE = {
       // inputTypesOptionsDesc: [],
       selectorsNumbering: [0],
       selected: naming.DYNAMICTEXT.concat('0'),
+      selectedOption: 0,
       srcFn: dynamicTextSRC,
       [naming.DYNAMICTEXT.concat('0')]: {
         optionsNumbering:[0],
@@ -153,6 +157,7 @@ export const SELECTORSTATE = {
       // inputTypesOptionsDesc: [],
       selectorsNumbering: [0],
       selected: naming.MULTITARGET.concat('0'),
+      selectedOption: 0,
       srcFn: dynamicTextSRC,
       [naming.MULTITARGET.concat('0')]: {
         optionsNumbering:[0],
@@ -181,6 +186,7 @@ export const SELECTORSTATE = {
       // inputTypesOptionsDesc: [],
       selectorsNumbering: [0],
       selected: naming.CHARTSETUP.concat('0'),
+      selectedOption: 0,
       srcFn: chartSetUpSRC,
       [naming.CHARTSETUP.concat('0')]: {
         optionsNumbering:[0],
@@ -212,6 +218,7 @@ export const SELECTORSTATE = {
       inputTypesSubOptions: ['iname','objectID','zoneidx','zoneposition'],
       selectorsNumbering: [0],
       selected: naming.PRESET.concat('0'),
+      selectedOption: 0,
       srcFn: presetSRC,
       [naming.PRESET.concat('0')]: {
         optionsNumbering:[0],

@@ -12,7 +12,7 @@
     margin: auto;
 }
 
-.frstContainer , .secContainer, .thrdContainer , .dualcontainer {
+.frstContainer , .secContainer, .secContainerSub, .thrdContainer , .dualcontainer {
     background-color: rgb(109, 48, 48);
     border-width: 1px;
     flex: 1 100%;
@@ -27,21 +27,29 @@
     order: 2
 }
 .frstContainer {
-    height: 20%;
+    height: 22%;
     order: 1;
 }
 .secContainer {
    /*order: 3;*/
    width: 60%;
 }
+
+.secContainerSub {
+    /*order: 3;*/
+    width: 40%;
+ }
+
 .thrdContainer {
    /* order: 4;*/
    width: 40%;
 }
 
 .button{
-    flex: auto;
-    display: flex;
+    /* flex: auto;
+    display: flex; */
+    display: block;
+    width: -webkit-fill-available;
 }
 
 .optionNavBar {
@@ -51,11 +59,21 @@
 .optionContainer {
     border-style: inset;
     border-color: rgb(97, 95, 95);
+    background-color: rgb(64 28 18) ;
 }
 
-.optionContainer, .seperator {
-    background-color: rgb(136, 80, 66);
+.optionContainer:hover:after, .optionContainer:hover > div{
+    background: rgb(145, 42, 42);
+    border-width: solid;
+    border-width: thick;
 }
+
+.seperator {
+    font-Size: 2.0vh;
+    text-Align: left;
+    background-Color: rgb(109, 48, 58);
+}
+
 
 .inputMain {
     display: flex;
@@ -119,5 +137,4 @@ label {
  .inputOption {
     margin-left: 1px;
  }
-
 

@@ -22,8 +22,6 @@ export class home extends Component {
 
     infoBox = (event) => {
 
-        console.log(event.type)
-   
         let el = event.target.innerText
         
         if (event.type === "mouseout") {

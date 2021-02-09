@@ -9,6 +9,7 @@ export const INPUT_CHANGE = 'INPUT_CHANGE';
 export const SUBMIT = 'SUBMIT';
 export const SELECTED = 'SELECTED';
 export const FIRSTSELECTOR = 'FIRSTSELECTOR';
+export const SELECTEDOPTION = 'SELECTEDOPTION';
 
 
 

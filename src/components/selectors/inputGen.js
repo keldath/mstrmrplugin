@@ -70,7 +70,6 @@ class InputGenOptions extends Component {
     }
 
     cleanInput = (event) => {
-
         event.target.value = '';
     }
  //value={this.props.panelStack[this.props.selected].options[item]}
@@ -81,7 +80,7 @@ class InputGenOptions extends Component {
         //debugger;
         //const optionsInput = this.props[PANELSTACK].inputTypesOptions;
         const optionsInput = this.props[seltypeInp].inputTypesOptions;
-        const subOptionsInput = this.props[seltypeInp].inputTypesSubOptions;
+        // const subOptionsInput = this.props[seltypeInp].inputTypesSubOptions;
         let selected = this.props[seltypeInp].selected
         let selectedObj = this.props[seltypeInp][selected];
         console.log(selectedObj)
@@ -99,8 +98,9 @@ class InputGenOptions extends Component {
                 return (
                         <React.Fragment  key={(selected+'option'+item2+item1)}>
                             <label htmlFor={item2} className={styles.test}><span className={styles.labelOption}>{item2}</span>
-                            <input type="text"  onChange={this.props.updateParmeters.bind(this,'options',item1,null,seltypeInp)}  name={item2}
-                            onDoubleClick={this.cleanInput.bind(this)}
+                            <input type="text" name={item2}
+                                                onChange={this.props.updateParmeters.bind(this,'options',item1,null,seltypeInp)}  
+                                                onDoubleClick={this.cleanInput.bind(this)} 
                             value={this.props[seltypeInp][selected].options[item1][item2]} />
                             </label>
                         </React.Fragment>
@@ -108,43 +108,45 @@ class InputGenOptions extends Component {
             }) 
 
             //---------------------------Suboptions generator------------------------
-            let subOptionContainer = null;
-             if (selectedObj.options[item1].subOptions !== undefined) {
-                 //only in case all Suboptions exists
-                    subOptionContainer = selectedObj.options[item1].optionsSubNumbering.map((item3,idx3) => {
+            // let subOptionContainer = null;
+            //  if (selectedObj.options[item1].subOptions !== undefined) {
+            //      //only in case all Suboptions exists
+            //         subOptionContainer = selectedObj.options[item1].optionsSubNumbering.map((item3,idx3) => {
 
-                        let inputs = subOptionsInput.map((item4,idx4) => {
-                            return  (  
-                                    <React.Fragment key={(selected+'subOption'+item4+item3)} >
-                                        <label  htmlFor={item4} className={styles.test}><span className={styles.labelOption} >{item4}</span>
-                                           <input  type="text" onChange={this.props.updateParmeters.bind(this,'subOption',item1,item3,seltypeInp)} name={item4} 
-                                                    onDoubleClick={this.cleanInput.bind(this)}
-                                                  value={selectedObj.options[item1].subOptions[item3][item4]}/>
-                                        </label>
-                                    </React.Fragment>
-                            )
-                        }) 
+            //             let inputs = subOptionsInput.map((item4,idx4) => {
+            //                 return  (  
+            //                         <React.Fragment key={(selected+'subOption'+item4+item3)} >
+            //                             <label  htmlFor={item4} className={styles.test}><span className={styles.labelOption} >{item4}</span>
+            //                                <input  type="text" onChange={this.props.updateParmeters.bind(this,'subOption',item1,item3,seltypeInp)} name={item4} 
+            //                                         onDoubleClick={this.cleanInput.bind(this)}
+            //                                       value={selectedObj.options[item1].subOptions[item3][item4]}/>
+            //                             </label>
+            //                         </React.Fragment>
+            //                 )
+            //             }) 
 
-                         return  (  <React.Fragment  key={selected+'subOptionContainer'+item3+item1}>
-                                        <div className={'seperator'} style={{"fontSize":"2.0vh","textAlign":"left","backgroundColor": "rgb(109, 48, 58)"}}>action {item3}:</div>
-                                        <button className={styles.removeBtn} onClick={this.props.removeSubOption.bind(this,seltypeInp,item1,item3)}>-</button>
-                                        {inputs}
-                                    </React.Fragment>
+            //              return  (  <React.Fragment  key={selected+'subOptionContainer'+item3+item1}>
+            //                             <div className={'seperator'} style={{"fontSize":"2.0vh","textAlign":"left","backgroundColor": "rgb(109, 48, 58)"}}>action {item3}:</div>
+            //                             <button className={styles.removeBtn} onClick={this.props.removeSubOption.bind(this,seltypeInp,item1,item3)}>-</button>
+            //                             {inputs}
+            //                         </React.Fragment>
                                     
-                                )
+            //                     )
                                  
-                 })
-            }
+            //      })
+            // }
 
 //key={(item4+idx4+idx3+Math.random *100 -1)}
             //-----------------------complete option component---------------------
             return (
-                            <div className={styles.optionContainer} key={selected+seltypeInp+'optionContainer'+item1}>
+                            <div className={styles.optionContainer} key={selected+seltypeInp+'optionContainer'+item1}
+                                onMouseEnter={this.props.selectedOption.bind(this,seltypeInp,item1)}
+                            >
                                 <span className={styles.optionName}>option {item1}:</span> 
                                 <button className={styles.removeBtn} onClick={this.props.removeOption.bind(this,item1,seltypeInp)}>-</button>
-                                {subOptionsInput !== undefined ?
+                                {/* {subOptionsInput !== undefined ?
                                     <button className={styles.removeBtn} onClick={this.props.addSubOption.bind(this,seltypeInp,selected,item1)}>+</button> 
-                                    : null}
+                                    : null} */}
                                 <div>
                                      {secInputs}
                                      {/* {subOptionContainer !== null ? <div className={'seperator'} 
@@ -152,12 +154,12 @@ class InputGenOptions extends Component {
                                                                             Sub Option:</div> : null } 
                                      {subOptionContainer} */}
                                 </div> 
-                                 <div>
+                                 {/* <div>
                                      {subOptionContainer !== null ? <div className={'seperator'} 
                                                                         style={{"fontSize":"2.5vh","textAlign":"left","backgroundColor": "rgb(109, 48, 48)"}}>
                                                                             Sub Option:</div> : null } 
                                      {subOptionContainer}
-                                </div> 
+                                </div>  */}
                             </div>
             )
         })
@@ -172,8 +174,63 @@ class InputGenOptions extends Component {
     }
 }
 
-// class InputGenSubOptions extends Component {
-// }
+class InputGenSubOptions extends Component {
+
+    cleanInput = (event) => {
+        event.target.value = '';
+    }
+    render() {
+        console.log('subbbbbbbbbbbbbb')
+    //---------------------------Suboptions generator------------------------
+        const seltypeInp = this.props.stype;
+        const subOptionsInput = this.props[seltypeInp].inputTypesSubOptions;
+        let selected = this.props[seltypeInp].selected;
+        let selectedOption = this.props[seltypeInp].selectedOption;
+        let selectedObj = this.props[seltypeInp][selected];
+        let subOptionContainer = null;
+//console.log(selectedObj.options[selectedOption]?.subOptions  !== undefined)
+//debugger;
+        if (selectedObj.options[selectedOption]?.subOptions !== undefined) {
+             //only in case all Suboptions exists
+                subOptionContainer = selectedObj.options[selectedOption].optionsSubNumbering.map((item3,idx3) => {
+
+                    let inputs = subOptionsInput.map((item4,idx4) => {
+                        return  (  
+                                <React.Fragment key={(selected+'subOption'+item4+item3)} >
+                                    <label  htmlFor={item4} className={styles.test}><span className={styles.labelOption} >{item4}</span>
+                                       <input  type="text" name={item4} 
+                                               onChange={this.props.updateParmeters.bind(this,'subOption',selectedOption,item3,seltypeInp)} 
+                                               onDoubleClick={this.cleanInput.bind(this)} 
+                                              value={selectedObj.options[selectedOption].subOptions[item3][item4]}/>
+                                    </label>
+                                </React.Fragment>
+                        )
+                    }) 
+
+                     return  (  <React.Fragment  key={selected+'subOptionContainer'+item3+selectedOption}>
+                                     <div className={styles.optionContainer}  name='sagi'>
+                                        <div className={styles.seperator}>
+                                            Option {selectedOption} - action {item3}
+                                            <button className={styles.removeBtn} onClick={this.props.removeSubOption.bind(this,seltypeInp,selectedOption,item3)}>-</button> 
+                                        </div>
+                                         {inputs}
+                                    </div>
+                                </React.Fragment>
+
+                            )
+             })
+        }
+        console.log(subOptionContainer)
+        return (
+            <React.Fragment > 
+                    <div className={styles.seperator} key='someKey'>
+                        <button className={styles.button} onClick={this.props.addSubOption.bind(this,seltypeInp,selected,selectedOption)}>Sub Option+</button>
+                </div>             
+                {subOptionContainer} 
+            </React.Fragment>
+        )
+    }
+}
 
 const mapStateToProps = state => {
     
@@ -208,12 +265,14 @@ const mapDispatchToPorps = dispatch => {
         removeOption: (idx,seltype) => dispatch({type: actionTypes.REMOVE_OPTION, payload: {idx: idx, seltype: seltype}})  ,
         removeSubOption: (seltype,optionIdx,subOptionIdx) => dispatch({type: actionTypes.REMOVE_SUBOPTION, payload: {seltype: seltype 
                                                                                                                     ,optionIdx: optionIdx
-                                                                                                                    ,subOptionIdx: subOptionIdx,}})                               
+                                                                                                                    ,subOptionIdx: subOptionIdx,}})   ,
+        selectedOption: (seltype,optionIdx) => dispatch({type: actionTypes.SELECTEDOPTION, payload: {seltype: seltype ,optionIdx: optionIdx}})                                                                                                                                       
     }
 }
 
 export default { InputGenMain : connect(mapStateToProps,mapDispatchToPorps) (React.memo(InputGenMain)),
-                 InputGenOptions : connect(mapStateToProps,mapDispatchToPorps) (React.memo(InputGenOptions))
+                 InputGenOptions : connect(mapStateToProps,mapDispatchToPorps) (React.memo(InputGenOptions)),
+                 InputGenSubOptions: connect(mapStateToProps,mapDispatchToPorps) (React.memo(InputGenSubOptions))
                  };
 
 
