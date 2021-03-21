@@ -7,7 +7,11 @@ import * as SELECTORSTATE from './stateTemplate';
 //import PanelStackSRC  from '../components/selectors/panelStack/panelStackSRC';//i should make a file with all srchtml fn's
 //import * as naming from '../layout/naming';
 
+/*
 
+ todo : break the reducers into seprate - combinereducers() later on.
+
+*/
 const initialState = {
        ...Object.values(SELECTORSTATE)[0],
        routePath: 'Home'

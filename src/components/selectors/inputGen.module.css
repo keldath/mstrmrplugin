@@ -60,6 +60,7 @@
     border-style: inset;
     border-color: rgb(97, 95, 95);
     background-color: rgb(64 28 18) ;
+    padding-bottom: 10px;
 }
 
 .optionContainer:hover:after, .optionContainer:hover > div{
@@ -89,14 +90,15 @@
 }
 
 .optionName {
-    width: 88%;
+    /* width: 88%; */
     height: 100%;
-    display: flex;
+    /* display: flex; */
     color: white;
-    float: left;
-    font-size: 3vh;;
+    /* float: left; */
+    /* font-size: 3vh;; */
+    background-color: rgb(109, 48, 58);
     text-decoration: underline;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     padding-left: 10px;
 }
 .test {
@@ -123,7 +125,11 @@ label {
 
  .labelOption {
     /*width: 90%;*/
-    margin-left: 1px;
+    /* margin-left: 1px; */
+    display: inline-grid;
+    text-align: left;
+    font-size: 2.2vh;
+    width: auto;
    /* justify-content: space-evenly;*/
     
  }
@@ -136,5 +142,7 @@ label {
 
  .inputOption {
     margin-left: 1px;
+    min-width: 40px;
+    width: auto;
  }
 

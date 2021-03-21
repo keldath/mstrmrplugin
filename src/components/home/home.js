@@ -58,7 +58,7 @@ export class home extends Component {
             <div>
                 <br/>
                 <h1>Welcome to MicroStrategy Custom Plugin !</h1>
-                <br/>
+                {/* <br/> */}
                 <p>choose the selector you would like to create</p>
                 <div className={styles.wrapper}>
                     <div className={styles.linksBox}>
